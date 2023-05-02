@@ -1,0 +1,31 @@
+@startuml
+skinparam backgroundColor strategy
+skinparam defaultFontColor black
+skinparam defaultFontSize 40
+skinparam ArrowColor mediumturquoise
+skinparam ArrowThickness 5
+skinparam DefaultFontName Broadway
+package org.renaultleat.crypto {
+  class CryptoUtil {
+    - privatekeyfile : String {static}
+    - pubkeyfile : String {static}
+    - CryptoUtil()
+    + getFileFromResource(fileName : String) : File {static}
+    - getFileFromResourceAsStream(fileName : String) : InputStream {static}
+    + getHash(data : String) : String {static}
+    + getKeyPair(index : int) : KeyPair {static}
+    + getPrivateKey(index : int) : PrivateKey {static}
+    + getPublicKey(index : int) : PublicKey {static}
+    + getPublicKeyString(index : int) : String {static}
+    + getSignature(index : int, message : String) : String {static}
+    + getUniqueIdentifier() : String {static}
+    + verify(index : int, signatureinput : String, message : String) : boolean {static}
+    + verify(pubKeyStr : String, signatureinput : String, message : String) : boolean {static}
+  }
+  class NodeKeyGenerator {
+    + NodeKeyGenerator()
+    + generateRSAKeyPair(totalkeys : int) {static}
+    + main(args : String[]) {static}
+  }
+}
+@enduml

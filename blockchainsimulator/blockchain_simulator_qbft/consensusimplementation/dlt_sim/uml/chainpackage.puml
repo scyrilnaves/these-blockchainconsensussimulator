@@ -1,0 +1,71 @@
+@startuml
+skinparam backgroundColor strategy
+skinparam defaultFontColor black
+skinparam defaultFontSize 40
+skinparam ArrowColor mediumturquoise
+skinparam ArrowThickness 5
+skinparam DefaultFontName Broadway
+package org.renaultleat.chain {
+  class Block {
+    ~ blocknumber : int
+    ~ blocktime : Timestamp
+    ~ commitMessageValidators : CopyOnWriteArrayList<String>
+    ~ hash : String
+    ~ prepareMessageValidators : CopyOnWriteArrayList<String>
+    ~ previousblockhash : String
+    ~ proposer : String
+    ~ roundno : int
+    ~ signature : String
+    ~ transactions : CopyOnWriteArrayList<Transaction>
+    + Block()
+    + Block(timestamp : Timestamp, previousblockhash : String, currentblockhash : String, data : CopyOnWriteArrayList<Transaction>, blockproposer : String, signature : String, blocknum : int)
+    + createBlock(lastBlock : Block, data : CopyOnWriteArrayList<Transaction>, wallet : Wallet) : Block {static}
+    + generateBlockHash(block : Block) : String {static}
+    + generateBlockHash(lastblockHash : String, transactions : List<Transaction>, proposer : String) : String {static}
+    + generateGenesis() : Block {static}
+    + getBlockData() : CopyOnWriteArrayList<Transaction>
+    + getBlockDetails() : String
+    + getBlockHash() : String
+    + getBlockNumber() : int
+    + getBlockProposer() : String
+    + getBlockSignature() : String
+    + getBlockTimestamp() : Timestamp
+    + getBlocknumber() : int
+    + getBlocktime() : Timestamp
+    + getCommitMessages() : CopyOnWriteArrayList<String>
+    + getHash() : String
+    + getLastBlockHash() : String
+    + getPrepareMessages() : CopyOnWriteArrayList<String>
+    + getPreviousblockhash() : String
+    + getProposer() : String
+    + getRoundNo() : int
+    + getSignature() : String
+    + getTransactions() : CopyOnWriteArrayList<Transaction>
+    + setBlocknumber(blocknumber : int)
+    + setBlocktime(blocktime : Timestamp)
+    + setCommitMessages(commitMessages : CopyOnWriteArrayList<String>)
+    + setHash(hash : String)
+    + setPrepareMessages(prepareMessages : CopyOnWriteArrayList<String>)
+    + setPreviousblockhash(previousblockhash : String)
+    + setProposer(proposer : String)
+    + setRoundNo(roundno : int)
+    + setSignature(signature : String)
+    + setTransactions(transactions : CopyOnWriteArrayList<Transaction>)
+    + signBlockHash(blockHash : String, wallet : Wallet) : String {static}
+    + verifyBlock(block : Block) : boolean {static}
+    + verifyProposer(block : Block, proposer : String) : boolean {static}
+  }
+  class BlockPool {
+    + blockIds : CopyOnWriteArrayList<Integer>
+    ~ blocks : CopyOnWriteArrayList<Block>
+    + BlockPool()
+    + addBlock(block : Block)
+    + blockExists(inblock : Block) : boolean
+    + clearBlockPool()
+    + getBlockforHash(blockHash : String) : Block
+    + getBlocks() : List<Block>
+    + removeBlock(inblockhash : String)
+  }
+ 
+}
+@enduml

@@ -1,0 +1,46 @@
+Unable to use a TTY - input is not a terminal or the right kind of file
+Unable to use a TTY - input is not a terminal or the right kind of file
+Unable to use a TTY - input is not a terminal or the right kind of file
+Unable to use a TTY - input is not a terminal or the right kind of file
+Unable to use a TTY - input is not a terminal or the right kind of file
+N Value:0
+N Value:1
+N Value:2
+N Value:3
+N Value:4
+Formed Peer IP to Connect for Peer: 1
+My IP: 10.42.0.105
+Peers are:10.42.0.104,10.42.0.105,10.42.1.60,10.42.2.97,10.42.0.106,
+"Node Network Set"N Value:0
+N Value:1
+N Value:2
+N Value:3
+N Value:4
+Formed Peer IP to Connect for Peer: 4
+My IP: 10.42.0.106
+Peers are:10.42.0.104,10.42.0.105,10.42.1.60,10.42.2.97,10.42.0.106,
+"Peers Value Set""Block Size Set""Total Nodes Set"N Value:0
+N Value:1
+N Value:2
+N Value:3
+N Value:4
+Formed Peer IP to Connect for Peer: 2
+My IP: 10.42.1.60
+Peers are:10.42.0.104,10.42.0.105,10.42.1.60,10.42.2.97,10.42.0.106,
+"Total Validators Set"N Value:0
+N Value:1
+N Value:2
+N Value:3
+N Value:4
+Formed Peer IP to Connect for Peer: 3
+My IP: 10.42.2.97
+Peers are:10.42.0.104,10.42.0.105,10.42.1.60,10.42.2.97,10.42.0.106,
+"Node Property Set""Node Latency Set"N Value:0
+N Value:1
+N Value:2
+N Value:3
+N Value:4
+Formed Peer IP to Connect for Peer: 0
+My IP: 10.42.0.104
+Peers are:10.42.0.104,10.42.0.105,10.42.1.60,10.42.2.97,10.42.0.106,
+"Node Behavior Set""Set As Validator:true""Block Period Time Set""Connection initiated""Node Network Set""Peers Value Set""Block Size Set""Node Network Set""Total Nodes Set""Peers Value Set""Total Validators Set""Node Network Set""Block Size Set""Peers Value Set""Total Nodes Set""Total Validators Set""Block Size Set""Total Nodes Set""Total Validators Set""Node Property Set""Node Latency Set""Node Behavior Set""Set As Validator:true""Node Network Set""Node Property Set""Block Period Time Set""Node Latency Set""Peers Value Set""Node Behavior Set""Connection initiated""Node Property Set""Block Size Set""Set As Validator:true""Node Latency Set""Total Nodes Set""Block Period Time Set""Node Behavior Set""Total Validators Set""Set As Validator:true""Connection initiated""Block Period Time Set""Connection initiated""Node Property Set""Node Latency Set""Node Behavior Set""Set As Validator:true""Block Period Time Set""Connection initiated""Started Listening to Peers""Started Listening to Peers""Started Listening to Peers""Started Listening to Peers""Started Listening to Peers""Collator Started""Simulation Started 4""Collator Started""Simulation Started 4""Collator Started""Collator Started""Simulation Started 4""Simulation Started 4""Collator Started""Simulation Started 4"

@@ -1,0 +1,66 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    field.cattle.io/publicEndpoints: '[{"addresses":["192.168.111.11","192.168.111.12","192.168.111.13","192.168.111.21","192.168.111.22","192.168.111.23"],"port":80,"protocol":"HTTP","serviceName":"dltsim-net:dltsim-http-last-service","ingressName":"dltsim-net:dltsimdashnodelast","hostname":"dltsim-dash-last.unice.cust.tasfrance.com","path":"/","allNodes":false}]'
+  creationTimestamp: "2022-02-16T17:56:28Z"
+  generation: 7
+  managedFields:
+  - apiVersion: networking.k8s.io/v1beta1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:status:
+        f:loadBalancer:
+          f:ingress: {}
+    manager: nginx-ingress-controller
+    operation: Update
+    time: "2022-02-16T17:56:47Z"
+  - apiVersion: extensions/v1beta1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:field.cattle.io/publicEndpoints: {}
+    manager: rancher
+    operation: Update
+    time: "2022-02-16T17:56:47Z"
+  - apiVersion: networking.k8s.io/v1beta1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:spec:
+        f:backend:
+          .: {}
+          f:serviceName: {}
+          f:servicePort: {}
+        f:rules: {}
+    manager: rancher
+    operation: Update
+    time: "2022-02-17T12:28:34Z"
+  name: dltsimdashnodelast
+  namespace: dltsim-net
+  resourceVersion: "196957303"
+  selfLink: /apis/networking.k8s.io/v1beta1/namespaces/dltsim-net/ingresses/dltsimdashnodelast
+  uid: b540f02e-16b1-4105-afa8-6dfa725bf8af
+spec:
+  backend:
+    serviceName: dltsim-http-last-service
+    servicePort: 8080
+  rules:
+  - host: dltsim-dash-last.unice.cust.tasfrance.com
+    http:
+      paths:
+      - backend:
+          serviceName: dltsim-http-last-service
+          servicePort: 8080
+        path: /
+        pathType: Prefix
+status:
+  loadBalancer:
+    ingress:
+    - ip: 192.168.111.11
+    - ip: 192.168.111.12
+    - ip: 192.168.111.13
+    - ip: 192.168.111.21
+    - ip: 192.168.111.22
+    - ip: 192.168.111.23

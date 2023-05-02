@@ -1,0 +1,68 @@
+@startuml
+skinparam backgroundColor strategy
+skinparam defaultFontColor black
+skinparam defaultFontSize 40
+skinparam ArrowColor mediumturquoise
+skinparam ArrowThickness 5
+skinparam DefaultFontName Broadway
+package org.renaultleat.node {
+  class NonValidator {
+    ~ allNodePublicKeys : List<String>
+    + NonValidator()
+    + generateAddresses() : List<String>
+    + isValidNonValidator(nodePublicKey : String) : boolean
+  }
+  class Transaction {
+    + from : String
+    + hash : String
+    + id : String
+    + input : String
+    + nodeid : String
+    + nodeindex : int
+    + signature : String
+    + timestamp : Timestamp
+    + Transaction(data : String, wallet : Wallet)
+    + Transaction(id : String, from : String, nodeId : String, nodeIndex : int, input : String, inputTimestamp : Timestamp, hash : String, signature : String)
+    + getFrom() : String
+    + getHash() : String
+    + getId() : String
+    + getInput() : String
+    + getNodeid() : String
+    + getNodeindex() : int
+    + getSignature() : String
+    + getTimestamp() : Timestamp
+    + setFrom(from : String)
+    + setHash(hash : String)
+    + setId(id : String)
+    + setInput(input : String)
+    + setNodeid(nodeid : String)
+    + setNodeindex(nodeindex : int)
+    + setSignature(signature : String)
+    + setTimestamp(timestamp : Timestamp)
+    + verifyTransaction(transaction : Transaction) : boolean {static}
+  }
+  class Validator {
+    ~ allNodePublicKeys : List<String>
+    + Validator()
+    + generateAddresses() : List<String>
+    + isValidValidator(nodePublicKey : String) : boolean
+  }
+  class Wallet {
+    ~ keypair : KeyPair
+    + nodeid : String
+    + nodeindex : int {static}
+    + nodeproperty : String {static}
+    ~ publicKey : String
+    + Wallet()
+    + createTransaction(message : String) : Transaction
+    + getKeyPair() : KeyPair
+    + getNodeId() : String
+    + getNodeIndex() : int {static}
+    + getNodeproperty() : String {static}
+    + getPublicKey() : String
+    + initalise(index : int)
+    + setnodeproperty(input : String) {static}
+    + signData(message : String) : String
+  }
+}
+@enduml

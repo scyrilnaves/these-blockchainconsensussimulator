@@ -1,0 +1,46 @@
+Unable to use a TTY - input is not a terminal or the right kind of file
+Unable to use a TTY - input is not a terminal or the right kind of file
+Unable to use a TTY - input is not a terminal or the right kind of file
+Unable to use a TTY - input is not a terminal or the right kind of file
+Unable to use a TTY - input is not a terminal or the right kind of file
+N Value:0
+N Value:1
+N Value:2
+N Value:3
+N Value:4
+Formed Peer IP to Connect for Peer: 3
+My IP: 10.42.2.107
+Peers are:10.42.2.106,10.42.0.219,10.42.0.218,10.42.2.107,10.42.2.108,
+N Value:0
+N Value:1
+N Value:2
+N Value:3
+N Value:4
+Formed Peer IP to Connect for Peer: 4
+My IP: 10.42.2.108
+Peers are:10.42.2.106,10.42.0.219,10.42.0.218,10.42.2.107,10.42.2.108,
+N Value:0
+N Value:1
+N Value:2
+N Value:3
+N Value:4
+Formed Peer IP to Connect for Peer: 0
+My IP: 10.42.2.106
+Peers are:10.42.2.106,10.42.0.219,10.42.0.218,10.42.2.107,10.42.2.108,
+N Value:0
+N Value:1
+N Value:2
+N Value:3
+N Value:4
+Formed Peer IP to Connect for Peer: 2
+My IP: 10.42.0.218
+Peers are:10.42.2.106,10.42.0.219,10.42.0.218,10.42.2.107,10.42.2.108,
+N Value:0
+N Value:1
+N Value:2
+N Value:3
+N Value:4
+Formed Peer IP to Connect for Peer: 1
+My IP: 10.42.0.219
+Peers are:10.42.2.106,10.42.0.219,10.42.0.218,10.42.2.107,10.42.2.108,
+"Node Network Set""Peers Value Set""Node Network Set""Block Size Set""Peers Value Set""Total Nodes Set""Block Size Set""Total Validators Set""Total Nodes Set""Total Validators Set""Node Network Set""Peers Value Set""Block Size Set""Total Nodes Set""Node Property Set""Node Network Set""Total Validators Set""Node Latency Set""Node Network Set""Peers Value Set""Node Property Set""Node Behavior Set""Block Size Set""Peers Value Set""Node Latency Set""Set As Validator:true""Total Nodes Set""Node Behavior Set""Block Size Set""Round Change Time Out Set""Total Validators Set""Set As Validator:true""Total Nodes Set""Round Change Time Out Set""Total Validators Set""Connection initiated""Connection initiated""Node Property Set""Node Latency Set""Node Behavior Set""Node Property Set""Node Latency Set""Set As Validator:true""Node Property Set""Node Behavior Set""Round Change Time Out Set""Node Latency Set""Set As Validator:true""Node Behavior Set""Connection initiated""Round Change Time Out Set""Set As Validator:true""Round Change Time Out Set""Connection initiated""Connection initiated""Started Listening to Peers""Started Listening to Peers""Started Listening to Peers""Started Listening to Peers""Started Listening to Peers""Collator Started""Collator Started""Simulation Started 4""Simulation Started 4""Collator Started""Collator Started""Simulation Started 4""Simulation Started 4""Collator Started""Simulation Started 4"

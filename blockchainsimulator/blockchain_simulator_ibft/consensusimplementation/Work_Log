@@ -1,0 +1,67 @@
+
+Fixed Synchronistion Issues ==== OK
+Outstanding:
+
+Scenario: 4 Nodes / 2 Clients / 5000 each
+
+Total txs = 20000 but should be 10000
+
+Single Client = 5079
+===================
+Solution: Change Tx Pool Structure for each round as Two Maps
+Remove SystemOut
+Fixed Simulator - 2 Nodes / 3 Nodes / 4 Nodes
+Parameters:
+1) Blocksize : Block Interval -- Ok
+TPS
+Stability - Block size 100 / 1000 / 10000
+2) No of Nodes --- Ok
+No fork for BFT Types
+====================================================== FIXED  ==================
+=============================
+Real World Network
+Message Communication Topology: 
+1) Full Mesh - costly
+2) Lattice Ring 
+3) Watts Strogatz Model 
+==============================
+Network Delay --- To do (Max 30 - 40 millisec)
+malicious node
+Papier Idee
+==============
+https://books.google.fr/books?id=5_edDwAAQBAJ&pg=PA213&lpg=PA213&dq=pbft+proposer+is+malicious&source=bl&ots=LsJ9CBnOR9&sig=ACfU3U3d3_qNedvtij_lKMZ2ckO5TYb0yQ&hl=en&sa=X&ved=2ahUKEwinprrl5fX1AhVEhRoKHeFCAWMQ6AF6BAgCEAM#v=onepage&q=pbft%20proposer%20is%20malicious&f=false 
+// Cause Delay of usual latency + 60000
+// Dont reply to prepare message and stall Commit
+=========================
+Visualization - No of Peers??
+Cloud PArtially --??
+=======================================
+Verify and start test
+
+visualizer post test run
+
+PBFT - Run Tests
+IBFT:
+https://github.com/ethereum/EIPs/issues/650 
+QBFT
+Clique
+
+Read & present
+=================
+https://www.hyperledger.org/blog/2019/02/13/introduction-to-sawtooth-pbft
+https://consensys.net/blog/enterprise-blockchain/scaling-consensus-for-enterprise-explaining-the-ibft-algorithm/
+https://github.com/ethereum/EIPs/issues/650
+https://arxiv.org/pdf/2002.03613.pdf
+https://arxiv.org/pdf/1909.10194.pdf
+https://arxiv.org/pdf/1901.07160.pdf
+https://www.youtube.com/watch?v=qcK7TxHQAxI
+https://www.hyperledger.org/blog/2019/02/13/introduction-to-sawtooth-pbft
+
+https://drive.google.com/file/d/1KmDrqxxFlbQGjyzsD_QTTPgONDtg7euB/view
+
+====================================================== FIXED  ==================
+fix rounchange counter
+
+
+
+

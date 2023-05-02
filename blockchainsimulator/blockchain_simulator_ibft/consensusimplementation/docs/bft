@@ -1,0 +1,48 @@
+https://github.com/nambrot/blockchain-in-js
+https://www.hamrodev.com/en/tutorials/javascript-blockchain
+
+asynchrnous
+https://github.com/erictraub/Learn-Blockchain-By-Building-Your-Own-In-JavaScript/blob/master/dev/networkNode.js
+
+Idea on BFT
+https://d-nb.info/1199607843/34
+
+randomised bft
+
+https://medium.com/coinmonks/implementing-pbft-in-blockchain-12368c6c9548
+
+https://github.com/kashishkhullar/pos-blockchain
+
+https://medium.com/coinmonks/implementing-proof-of-stake-part-5-7e3d5b6cdc31
+
+https://github.com/dvf/blockchain-book/tree/main/chapters/chapter_5
+
+Book on Daniel Van flymaan
+
+Implement in Spring + Java===== https://www.youtube.com/watch?v=CcLOj3uhb0A P2P
+
+https://www.baeldung.com/a-guide-to-java-sockets
+
+http://www.gibello.com/blog/index.php?post/2007/03/09/Petit-exercice-de-P2P-peer-to-peer-en-java
+
+file:///home/renault/Downloads/Blockchain_Technology_in_IoT_Springer.pdf
+
+My problem: https://github.com/hyperledger/besu/issues/3062#issuecomment-970720600
+
+
+Proof of Formulation
+High Security, Thorughput, Scalaibility
+
+Delegated Proof of Stake
+Low Security, High Thorughpout, Scalability
+
+
+GOOD ONE:
+someone thesis
+1) https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&ved=2ahUKEwjz8cnXk6L0AhUGSPEDHYI1DYo4ChAWegQIGRAB&url=https%3A%2F%2Frepository.tudelft.nl%2Fislandora%2Fobject%2Fuuid%3Ad3d56dd8-60ee-47f7-b23a-cdc6c2650e14%2Fdatastream%2FOBJ%2Fdownload&usg=AOvVaw1JZKxObgZd7MxXFO8FTFtH
+
+2) https://hal.inria.fr/hal-01445797/document --vukolic
+
+Honey Badger___________
+
+EDDSA: https://howtodoinjava.com/java15/java-eddsa-example/

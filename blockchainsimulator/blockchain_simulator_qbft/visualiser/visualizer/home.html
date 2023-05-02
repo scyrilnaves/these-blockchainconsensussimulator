@@ -1,0 +1,305 @@
+<html>
+
+<head>
+    <title>DLT Simulator</title>
+    <script src='Chart.js' charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div style="margin:100px;">
+        <div class="navbar navbar-inverse navbar-static-top">
+            <!--  <div class="container">
+                <a class="navbar-brand" href="/">DLT Simulator</a>
+            </div> -->
+            <div id="logo">
+                <h1 style="color:white;">QBFT DLT Simulator</h1>
+                <img src="leat.jpeg" alt="LEAT" width="300" height="150">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp;
+                <img src="renault.png" alt="Renault" width="300" height="150">
+            </div>
+            </nav>
+            <div class="jumbotron" style="padding:40px;">
+                <div id="container"></div>
+                <br>
+                <div>
+                    <button id="generate">Get Test Types</button>
+                </div>
+                <b>Consensus Type:</b> <input type="text" id="consensus" value="" readonly>&nbsp&nbsp;
+                <b>No of Nodes:</b> <input type="text" id="NoNode" value="" readonly>&nbsp&nbsp;
+                <b>Network Type:</b> <input type="text" id="NwType" value="" readonly>&nbsp&nbsp;
+                <b>Block Size:</b> <input type="text" id="blSize" value="" readonly>&nbsp&nbsp;
+                <b>Network Latency</b> <input type="text" id="nwLatency" value="" readonly>&nbsp&nbsp;
+                <b>Node Behaviour:</b> <input type="text" id="nodeBehavior" value="" readonly>&nbsp&nbsp;
+                <b>Total Txs:</b> <input type="text" id="totalTxs" value="" readonly>&nbsp&nbsp;
+                <b>Total Validators:</b> <input type="text" id="totalValid" value="" readonly>&nbsp&nbsp;
+                <b>Are you Validator:</b> <input type="text" id="isValid" value="" readonly>&nbsp&nbsp;
+                <b>Round Change Timeout:</b> <input type="text" id="roundChange" value="" readonly>&nbsp&nbsp;
+
+                <b>Transactions Validated:</b> <input type="text" id="txvalidated" value="" readonly>&nbsp&nbsp;
+                <b>Test Duration(secs):</b> <input type="text" id="testduration" value="" readonly>&nbsp&nbsp;
+
+                <div id="txgraph">
+                    <h3>Transaction Rate</h1>
+                        <canvas id="dltTX" style="width:100%;max-width:700px"></canvas>
+                </div>
+                <div id="bftgraph">
+                    <h3>Consensus Message Rate</h1>
+                        <canvas id="dltBFT" style="width:100%;max-width:700px"></canvas>
+                </div>
+
+
+            </div>
+        </div>
+        <script type="text/javascript">
+            ///////////////////////////////////////////////////////////////////////////////////////
+
+            document.getElementById('generate').onclick = function () {
+                const testtypes = [];
+                fetch('testtype.txt')
+                    .then(response => response.text())
+                    .then(text => {
+                        let linearray = text.split('\n'); for (var i = 0; i < linearray.length; i++) {
+                            testtypes.push(linearray[i].toString() + ",first");
+                            testtypes.push(linearray[i].toString() + ",mid");
+                            testtypes.push(linearray[i].toString() + ",last");
+
+                        }
+                        var select = document.createElement("select");
+                        select.name = "Testtypes";
+                        select.id = "Testtypes";
+                        select.onchange = changeTestType;
+
+                        for (var k = 0; k < testtypes.length; k++) {
+                            // console.log(testtypes[k]);
+                            var option = document.createElement("option");
+                            option.value = testtypes[k];
+                            option.text = testtypes[k]
+                            select.appendChild(option);
+                        }
+
+                        var label = document.createElement("label");
+                        label.innerHTML = "Choose your test Type: "
+                        label.htmlFor = "Testtypes";
+
+                        document.getElementById("container").appendChild(label).appendChild(select);
+                    })
+
+            }
+            function changeTestType() {
+                var e = document.getElementById("Testtypes");
+                var testString = e.value;
+
+                chartfunction(testString)
+            }
+            //////////////////////////////////////////////////////////////////////////////////////
+
+            // Get the network State as API CALLS
+
+            function chartfunction(testType) {
+                var testTypeArray = testType.split(",")
+                var actualTest = testTypeArray[0];
+                var url = testTypeArray[1];
+                console.log("test" + actualTest);
+                console.log("url" + url);
+                var basepath = actualTest + "/" + url + "/";
+                var testDetails = actualTest.split(';');
+                var NoNode = testDetails[0].split(':')[1];
+                var NwType = testDetails[1].split(':')[1];
+                var blSize = testDetails[2].split(':')[1];
+                var nwLatency = testDetails[3].split(':')[1];
+                var nodeBehavior = testDetails[4].split(':')[1];
+                var totalTxs = testDetails[5].split(':')[1];
+                var consensus = testDetails[6].split(':')[1];
+                var totalValid = testDetails[7].split(':')[1];
+                var isValid = testDetails[8].split(':')[1];
+                var rchangeTime = testDetails[9].split(':')[1];
+
+                document.getElementById("NoNode").value = NoNode;
+                document.getElementById("NwType").value = NwType;
+                document.getElementById("blSize").value = blSize;
+                document.getElementById("nwLatency").value = nwLatency;
+                if (nodeBehavior == "0") {
+                    document.getElementById("nodeBehavior").value = "GOOD NODE :)";
+                } else {
+                    document.getElementById("nodeBehavior").value = "BAD NODE !! :(";
+                }
+                document.getElementById("totalTxs").value = totalTxs;
+                document.getElementById("consensus").value = consensus;
+                document.getElementById("totalValid").value = totalValid;
+                document.getElementById("isValid").value = isValid;
+                document.getElementById("roundChange").value = rchangeTime;
+                // Transaction Validated
+                $.getJSON(basepath + "txvalidated.json", function (data) {
+
+                    const txvalidateddata = JSON.parse(data);
+                    document.getElementById("txvalidated").value = txvalidateddata;
+
+                })
+                // Test Time
+                fetch(basepath + "duration.txt")
+                    .then(response => response.text())
+                    .then(text => {
+                        var duration = text.split(':')[1];
+                        document.getElementById("testduration").value = duration;
+                    })
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                // End API Calls
+                //PROCESSED TX PART
+                var processedtpstime = [];
+                var processedtpsdata = [];
+                var filled = '';
+
+                //FINALISED TX PART
+                var finalisedtpstime = [];
+                var finalisedtpsdata = [];
+
+
+                fetch(basepath + "processedtps.json").then(response => response.json()).then(data => {
+                    let txprocesseddata = data;
+                    for (let i = 0; i < txprocesseddata.length; i++) {
+                        processedtpstime[i] = txprocesseddata[i].map.time;
+                        processedtpsdata[i] = Number(txprocesseddata[i].map.tps)
+                    }
+                    fetch(basepath + "finalisedtps.json").then(response => response.json()).then(data => {
+                        let txfinaliseddata = data;
+                        for (let i = 0; i < txfinaliseddata.length; i++) {
+                            finalisedtpstime[i] = txfinaliseddata[i].map.time;
+                            finalisedtpsdata[i] = Number(txfinaliseddata[i].map.tps)
+                        }
+                        new Chart("dltTX", {
+                            //type: "bar",
+                            type: "line",
+                            data: {
+                                labels: processedtpstime,
+                                datasets: [{
+                                    label: 'TPS Processed Rate',
+                                    fill: false,
+                                    lineTension: 0,
+                                    borderWidth: 1,
+                                    backgroundColor: "rgb(255, 99, 132)",
+                                    borderColor: "rgb(255, 99, 132)",
+                                    data: processedtpsdata
+                                }, {
+                                    label: 'TPS Finalised Rate',
+                                    fill: false,
+                                    lineTension: 0,
+                                    borderWidth: 1,
+                                    backgroundColor: "rgb(255, 159, 64)",
+                                    borderColor: "rgb(255, 159, 64)",
+                                    data: finalisedtpsdata
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                interaction: {
+                                    mode: 'index',
+                                    intersect: false,
+                                },
+                                stacked: false,
+                                plugins: {
+                                    title: {
+                                        display: true,
+                                        text: 'Processed and Finalised TPS'
+                                    }
+                                },
+                                legend: { display: true }/* ,
+                        scales: {
+                            yAxes: [{ ticks: { min: 0, max: 50000 } }],
+                        } */
+                            }
+                        })
+                    })
+                })
+
+
+                //END PROCESSED TX PART
+                //////////////////////////////////////////////////////////////////////////////////////////////
+                //CONSENSUS MESSAGE PART
+                var consensusmsgtime = [];
+                var preparedtpsdata = [];
+                var committpsdata = [];
+                var roundchangetpsdata = [];
+
+
+                fetch(basepath + "preparetps.json").then(response => response.json()).then(data => {
+                    let txprepareddata = data;
+                    for (let i = 0; i < txprepareddata.length; i++) {
+                        consensusmsgtime[i] = txprepareddata[i].map.time;
+                        preparedtpsdata[i] = Number(txprepareddata[i].map.tps)
+                    }
+                    fetch(basepath + "committps.json").then(response => response.json()).then(data => {
+                        let txcommitdata = data;
+                        for (let i = 0; i < txcommitdata.length; i++) {
+                            committpsdata[i] = Number(txcommitdata[i].map.tps)
+                        }
+                        fetch(basepath + "committps.json").then(response => response.json()).then(data => {
+                            let txroundchangedata = data;
+                            for (let i = 0; i < txroundchangedata.length; i++) {
+                                roundchangetpsdata[i] = Number(txroundchangedata[i].map.tps)
+                            }
+
+                            new Chart("dltBFT", {
+                                //type: "bar",
+                                type: "line",
+                                data: {
+                                    labels: consensusmsgtime,
+                                    datasets: [{
+                                        label: 'Prepare Message Rate',
+                                        fill: false,
+                                        lineTension: 0,
+                                        borderWidth: 1,
+                                        backgroundColor: "rgb(255, 99, 132)",
+                                        borderColor: "rgb(255, 99, 132)",
+                                        data: preparedtpsdata
+                                    }, {
+                                        label: 'Commit Message Rate',
+                                        fill: false,
+                                        lineTension: 0,
+                                        borderWidth: 1,
+                                        backgroundColor: "rgb(255, 159, 64)",
+                                        borderColor: "rgb(255, 159, 64)",
+                                        data: committpsdata
+                                    }, {
+                                        label: 'Round Change Message Rate',
+                                        fill: false,
+                                        lineTension: 0,
+                                        borderWidth: 1,
+                                        backgroundColor: "rgb(64, 67, 255)",
+                                        borderColor: "rgb(64, 67, 255)",
+                                        data: roundchangetpsdata
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    interaction: {
+                                        mode: 'index',
+                                        intersect: false,
+                                    },
+                                    stacked: false,
+                                    plugins: {
+                                        title: {
+                                            display: true,
+                                            text: 'Prepare,Commit,RoundChange TPS'
+                                        }
+                                    },
+                                    legend: { display: true }/* ,
+                        scales: {
+                            yAxes: [{ ticks: { min: 0, max: 50000 } }],
+                        } */
+                                }
+                            })
+
+
+                        })
+                    })
+                })
+            }
+
+
+        </script>
+</body>
+
+</html>

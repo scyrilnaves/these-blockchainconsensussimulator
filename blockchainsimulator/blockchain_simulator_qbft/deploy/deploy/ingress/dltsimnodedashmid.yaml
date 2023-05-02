@@ -1,0 +1,38 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  creationTimestamp: "2022-02-18T10:51:51Z"
+  generation: 1
+  managedFields:
+  - apiVersion: networking.k8s.io/v1beta1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:spec:
+        f:backend:
+          .: {}
+          f:serviceName: {}
+          f:servicePort: {}
+        f:rules: {}
+    manager: rancher
+    operation: Update
+    time: "2022-02-18T10:51:51Z"
+  name: dltsimnodedashmid
+  namespace: dltsim-net
+  resourceVersion: "196957463"
+  selfLink: /apis/networking.k8s.io/v1beta1/namespaces/dltsim-net/ingresses/dltsimnodedashmid
+  uid: a16e1edd-87ad-46f0-a1a5-c7afb84f7754
+spec:
+  backend:
+    serviceName: dltsim-http-mid-service
+    servicePort: 8080
+  rules:
+  - host: dltsim-dash-mid.unice.cust.tasfrance.com
+    http:
+      paths:
+      - backend:
+          serviceName: dltsim-http-mid-service
+          servicePort: 8080
+        path: /
+        pathType: Prefix
+status:
+  loadBalancer: {}

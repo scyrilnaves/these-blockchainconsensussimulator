@@ -1,0 +1,85 @@
+@startuml
+skinparam backgroundColor strategy
+skinparam defaultFontColor black
+skinparam defaultFontSize 40
+skinparam ArrowColor mediumturquoise
+skinparam ArrowThickness 5
+skinparam DefaultFontName Broadway
+package org.renaultleat.api {
+  class Simulator_controller {
+    ~ blockPool : BlockPool
+    ~ blockchain : Blockchain
+    ~ gson : Gson
+    ~ nonValidator : NonValidator
+    ~ p2pserver : P2PServer
+    ~ bftConsensusMessageHandler : BFTConsensusMessageHandler
+    ~ bftConsensusRoundChangeHandler : BFTConsensusRoundChangeHandler
+    ~ bftMessagePool : BFTMessagePool
+    ~ bftTransactionMessageHandler : BFTTransactionMessageHandler
+    ~ bftTransactionMessageHandlerPenta : BFTTransactionMessageHandlerPenta
+    ~ bftTransactionMessageHandlerQuar : BFTTransactionMessageHandlerQuar
+    ~ bftTransactionMessageHandlerSec : BFTTransactionMessageHandlerSec
+    ~ bftTransactionMessageHandlerSix : BFTTransactionMessageHandlerSix
+    ~ bftTransactionMessageHandlerTer : BFTTransactionMessageHandlerTer
+    ~ queueResource : QueueResource
+    ~ simulator_collator : Simulator_collator
+    ~ simulator_result : Simulator_result
+    ~ simulator_service : Simulator_service
+    ~ synchronizer : Synchronizer
+    ~ transactionPool : TransactionPool
+    ~ validator : Validator
+    ~ wallet : Wallet
+    + Simulator_controller()
+    + getAsValidator() : String
+    + getBlockNo() : String
+    + getBlockSize() : String
+    + getBlocks() : String
+    + getBlocksinPool() : String
+    + getCommitRate() : String
+    + getEntryTPS() : String
+    + getFinalisedTPS() : String
+    + getIP() : String
+    + getMinApproval() : String
+    + getNodeBehavior() : String
+    + getNodeLatency() : String
+    + getNodeNetwork() : String
+    + getNodeProperty() : String
+    + getPeers() : String
+    + getPrepareRate() : String
+    + getProcessedTPS() : String
+    + getRoundChange() : String
+    + getRoundChangeRate() : String
+    + getStartTime() : String
+    + getTotalNodes() : String
+    + getTotalValidators() : String
+    + getTransactionsValidatedNo() : String
+    + getTransactionsinPoolNo(roundno : String) : String
+    + getVersion() : String
+    + initiateConnection() : String
+    + listentoPeers() : String
+    + sendMessageToPeer(message : String) : String
+    + setRoundchangeTimeOut(value : String) : String
+    + startResultCollator() : String
+    + startSimulation1(notxs : String) : String
+    + startSimulation2(notxs : String) : String
+    + startSimulation3(notxs : String) : String
+    + startSimulation4(notxs : String) : String
+    + startSimulation5(notxs : String) : String
+    + startSimulation6(notxs : String) : String
+    + startSimulation7(notxs : String) : String
+    + startSimulation8(notxs : String) : String
+    + startSimulation9(notxs : String) : String
+    + startSimulationSingle(notxs : String) : String
+    + stopResultCollator() : String
+    + storeAsValidator(value : String) : String
+    + storeBlockSize(value : String) : String
+    + storeNodeBehavior(value : String) : String
+    + storeNodeLatency(value : String) : String
+    + storeNodeNetwork(value : String) : String
+    + storeNodeProperty(value : String) : String
+    + storePeers(value : String) : String
+    + storeTotalNodes(value : String) : String
+    + storeTotalValidators(value : String) : String
+  }
+}
+@enduml

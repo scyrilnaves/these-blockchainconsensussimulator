@@ -1,0 +1,69 @@
+@startuml
+skinparam backgroundColor strategy
+skinparam defaultFontColor black
+skinparam defaultFontSize 40
+skinparam ArrowColor mediumturquoise
+skinparam ArrowThickness 5
+skinparam DefaultFontName Broadway
+package org.renaultleat.api {
+  class Simulator_result {
+    + commitCounter : Map<Timestamp, Integer>
+    + finalisedTpsStorage : Map<Timestamp, Integer>
+    + inputTpsStorage : SortedMap<Timestamp, Integer>
+    + prepareCounter : Map<Timestamp, Integer>
+    + roundChangeCounter : Map<Timestamp, Integer>
+    + Simulator_result()
+  }
+  class Simulator_service {
+    ~ p2pServer : P2PServer
+    ~ simulator_result : Simulator_result
+    ~ wallet : Wallet
+    + Simulator_service(p2pServer : P2PServer, wallet : Wallet, simulator_result : Simulator_result)
+    + Simulator_service(wallet : Wallet)
+    + getAsValidator() : boolean
+    + getBlockSize() : int
+    + getBlocks() : String
+    + getBlocksinBlockPool() : String
+    + getCommitMessageRate() : Map<Timestamp, Integer>
+    + getCommitTPSJSON() : List<JSONObject>
+    + getFinalisedTPS() : Map<Timestamp, Integer>
+    + getFinalisedTPSJSON() : List<JSONObject>
+    + getIP() : String
+    + getIPS() : String
+    + getInputTPS() : Map<Timestamp, Integer>
+    + getInputTPSJSON() : List<JSONObject>
+    + getJSONData(objData : Map<Timestamp, Integer>) : List<JSONObject>
+    + getNodeBehavior() : String
+    + getNodeLatency() : long
+    + getNodeNetwork() : String
+    + getNodeProperty() : int
+    + getNoofBlocks() : int
+    + getPrepareMessageRate() : Map<Timestamp, Integer>
+    + getPrepareTPSJSON() : List<JSONObject>
+    + getProcessedTPS() : String
+    + getRoundChange() : long
+    + getRoundChangeMessageRate() : Map<Timestamp, Integer>
+    + getRoundChangeTPSJSON() : List<JSONObject>
+    + getTotalNodes() : int
+    + getTotalTransactionsValidatedNo() : String
+    + getTotalValidators() : int
+    + getTransactionsinPoolNo(roundno : String) : String
+    + getVersion() : String
+    + initiateConnection()
+    + listentoPeers()
+    + sendMessageToPeer(message : String)
+    + setRoundChange(value : String)
+    + startSimulation(notxs : String, nothreads : String)
+    + startSimulationSingle(notxs : String)
+    + storeAsValidator(value : String)
+    + storeBlockSize(value : String)
+    + storeIPS(value : String)
+    + storeNodeBehavior(value : String)
+    + storeNodeLatency(value : String)
+    + storeNodeNetwork(value : String)
+    + storeNodeProperty(value : String)
+    + storeTotalNodes(value : String)
+    + storeTotalValidators(value : String)
+  }
+}
+@enduml

@@ -1,0 +1,47 @@
+@startuml
+skinparam backgroundColor strategy
+skinparam defaultFontColor black
+skinparam defaultFontSize 40
+skinparam ArrowColor mediumturquoise
+skinparam ArrowThickness 5
+skinparam DefaultFontName Broadway
+package org.renaultleat.consensus {
+  class BFTMessagePool {
+    + commitPool : Map<String, CopyOnWriteArrayList<String>>
+    + preparePool : Map<String, CopyOnWriteArrayList<String>>
+    + roundChangePool : Map<String, CopyOnWriteArrayList<String>>
+    + BFTMessagePool()
+    + addMessage(message : Message) : boolean
+    + clearAllMessagePool()
+    + clearAllMessagePoolForBlockHash(blockhash : String)
+    + clearCommitMessagePoolForBlockHash(blockhash : String)
+    + clearPrepareMessagePoolForBlockHash(blockhash : String)
+    + clearRoundChangeMessagePoolForBlockHash(blockhash : String)
+    + existingCommitMessage(message : Message) : boolean
+    + existingMessage(message : Message) : boolean
+    + existingPrepareMessage(message : Message) : boolean
+    + existingRoundChangeMessage(message : Message) : boolean
+    + getCommmitPool() : Map<String, CopyOnWriteArrayList<String>>
+    + getPreparePool() : Map<String, CopyOnWriteArrayList<String>>
+    + getRoundChangePool() : Map<String, CopyOnWriteArrayList<String>>
+    + getSizeofCommitMessagePoolForBlockHash(blockhash : String) : int
+    + getSizeofPrepareMessagePoolForBlockHash(blockhash : String) : int
+    + getSizeofRoundChangeMessagePoolForBlockHash(blockhash : String) : int
+    + isValidMessage(message : Message) : boolean
+    + message(type : String, block : Block, wallet : Wallet, roundCounter : int) : Message
+    + message(type : String, inmessage : Message, wallet : Wallet, roundCounter : int) : Message
+    + setCommmitPool(commmitPool : Map<String, CopyOnWriteArrayList<String>>)
+    + setPreparePool(preparePool : Map<String, CopyOnWriteArrayList<String>>)
+    + setRoundChangePool(roundChangePool : Map<String, CopyOnWriteArrayList<String>>)
+  }
+  class Synchronizer {
+    + commitconsensusReached : Map<String, Boolean>
+    + consensusReached : Map<String, Boolean>
+    + consensusincourse : boolean
+    + prepareconsensusReached : Map<String, Boolean>
+    + roundchangeconsensusReached : Map<String, Boolean>
+    + thresholdReached : boolean
+    + Synchronizer()
+  }
+}
+@enduml

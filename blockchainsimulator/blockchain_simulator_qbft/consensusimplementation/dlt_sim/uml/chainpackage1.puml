@@ -1,0 +1,59 @@
+@startuml
+skinparam backgroundColor strategy
+skinparam defaultFontColor black
+skinparam defaultFontSize 40
+skinparam ArrowColor mediumturquoise
+skinparam ArrowThickness 5
+skinparam DefaultFontName Broadway
+package org.renaultleat.chain {
+  class Blockchain {
+    + blockIds : CopyOnWriteArrayList<Integer>
+    ~ chain : CopyOnWriteArrayList<Block>
+    ~ nonValidator : NonValidator
+    ~ nonValidators : CopyOnWriteArrayList<String>
+    + roundCounter : AtomicInteger
+    ~ validator : Validator
+    ~ validators : CopyOnWriteArrayList<String>
+    + Blockchain()
+    + Blockchain(validator : Validator, nonValidator : NonValidator)
+    + addBlock(block : Block) : Block
+    + addUpdatedBlock(block : Block, blockPool : BlockPool, pbftMessagePool : BFTMessagePool)
+    + createBlock(transactions : CopyOnWriteArrayList<Transaction>, wallet : Wallet) : Block
+    + getChain() : CopyOnWriteArrayList<Block>
+    + getNonValidators() : CopyOnWriteArrayList<String>
+    + getProposer() : String
+    + getRoundChangeProposer() : String
+    + getRoundCounter() : int
+    + getValidators() : CopyOnWriteArrayList<String>
+    + incrementRoundCounter()
+    + isValidBlock(inblock : Block) : boolean
+    + setChain(chain : CopyOnWriteArrayList<Block>)
+    + setNonValidators(nonValidators : CopyOnWriteArrayList<String>)
+    + setRoundCounter(newRoundCounter : int)
+    + setValidators(validators : CopyOnWriteArrayList<String>)
+  }
+  class TransactionPool {
+    + blockchain : Blockchain
+    + confirmedTransactionIds : CopyOnWriteArrayList<String>
+    + roundcounter : AtomicInteger
+    + transactionRoundStatus : Map<Integer, Boolean>
+    + transactionStorage : Map<Integer, CopyOnWriteArrayList<Transaction>>
+    + transactionThreshold : int
+    + TransactionPool()
+    + addTransaction(transaction : Transaction) : boolean
+    + addconfirmedTransactionId(id : String)
+    + addconfirmedTransactionIds(ids : List<String>)
+    + clearTransactionPool()
+    + clearTransactionPoolFromIncomingBlock(roundno : int, intransactions : CopyOnWriteArrayList<Transaction>)
+    + confirmedTransactionIdexists(id : String) : boolean
+    + confirmedTransactionIdsexists(ids : List<String>) : boolean
+    + getTransactionRoundStatus() : Map<Integer, Boolean>
+    + getTransactionThreshold() : int
+    + getTransactions(roundno : int, wallet : Wallet) : CopyOnWriteArrayList<Transaction>
+    + setTransactionThreshold(transactionThreshold : int)
+    + setTransactions(transactions : CopyOnWriteArrayList<Transaction>, roundno : int)
+    + transactionExists(intransaction : Transaction, roundno : int) : boolean
+    + verifyTransaction(transaction : Transaction) : boolean
+  }
+}
+@enduml

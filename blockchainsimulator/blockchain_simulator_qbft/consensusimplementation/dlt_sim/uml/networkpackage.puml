@@ -1,0 +1,63 @@
+@startuml
+skinparam backgroundColor strategy
+skinparam defaultFontColor black
+skinparam defaultFontSize 30
+skinparam ArrowColor mediumturquoise
+skinparam ArrowThickness 5
+skinparam DefaultFontName Broadway
+package org.renaultleat.network {
+  class NetworkTopologyGenerator {
+    + NetworkTopologyGenerator()
+    + generateRingLatticeTopologyCSV(totalNodeCount : int, meanDegree : int) {static}
+    + generateWattsStrogatzTopologyCSV(totalNodeCount : int, meanDegree : int) {static}
+    + main(args : String[]) {static}
+    + writeToCSV(totalConnectionMap : Map<Integer, Map<Integer, Map<Integer, Boolean>>>, topology : String) {static}
+  }
+  class P2PServer {
+    + blockPool : BlockPool
+    + blockchain : Blockchain
+    + currentuser : String
+    + nodeCommunicator : NodeCommunicator
+    + nodeCommunicatorPenta : NodeCommunicatorPenta
+    + nodeCommunicatorQuar : NodeCommunicatorQuar
+    + nodeCommunicatorSec : NodeCommunicatorSec
+    + nodeCommunicatorSix : NodeCommunicatorSix
+    + nodeCommunicatorTer : NodeCommunicatorTer
+    + nonValidator : NonValidator
+    + pbftMessagePool : BFTMessagePool
+    + queueResource : QueueResource
+    + transactionPool : TransactionPool
+    + validator : Validator
+    + wallet : Wallet
+    + P2PServer(blockChain, transactionPool, wallet , BFTMessagePool, validator, nonValidator, blockPool, nodeCommunicator, queueResource)
+    + communicate(message : String)
+    + connect()
+    + connectToPeers()
+    + getPeerList() : List<String>
+    + listenToPeers(user , nodeCommunicator , peers : List<String> )
+    + startSimulationBroadcast(no_of_transactions : int, no_of_threads : int)
+    + startSimulationBroadcastSingle(no_of_transactions : int)
+  }
+  class QueueResource {
+    ~ messageBlockingQueue : BlockingQueue<JSONObject>
+    ~ messageBlockingQueueSec : BlockingQueue<JSONObject>
+    ~ transactionBlockingQueue : BlockingQueue<JSONObject>
+    ~ transactionBlockingQueuePenta : BlockingQueue<JSONObject>
+    ~ transactionBlockingQueueQuar : BlockingQueue<JSONObject>
+    ~ transactionBlockingQueueSec : BlockingQueue<JSONObject>
+    ~ transactionBlockingQueueSix : BlockingQueue<JSONObject>
+    ~ transactionBlockingQueueTer : BlockingQueue<JSONObject>
+    + QueueResource()
+    + getMessageBlockingQueue() : BlockingQueue<JSONObject>
+    + getMessageBlockingQueueSec() : BlockingQueue<JSONObject>
+    + getTransactionBlockingQueue() : BlockingQueue<JSONObject>
+    + getTransactionBlockingQueuePenta() : BlockingQueue<JSONObject>
+    + getTransactionBlockingQueueQuar() : BlockingQueue<JSONObject>
+    + getTransactionBlockingQueueSec() : BlockingQueue<JSONObject>
+    + getTransactionBlockingQueueSix() : BlockingQueue<JSONObject>
+    + getTransactionBlockingQueueTer() : BlockingQueue<JSONObject>
+    + setMessageBlockingQueue(messageBlockingQueue : BlockingQueue<JSONObject>)
+    + setTransactionBlockingQueue(transactionBlockingQueue : BlockingQueue<JSONObject>)
+  }
+}
+@enduml

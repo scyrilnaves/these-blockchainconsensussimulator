@@ -1,0 +1,66 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    field.cattle.io/publicEndpoints: '[{"addresses":["192.168.111.11","192.168.111.12","192.168.111.13","192.168.111.21","192.168.111.22","192.168.111.23"],"port":80,"protocol":"HTTP","serviceName":"dltsim-net:dltsim-http-service","ingressName":"dltsim-net:dltsimdashnode1","hostname":"dltsim-dash.unice.cust.tasfrance.com","path":"/","allNodes":false}]'
+  creationTimestamp: "2022-02-16T17:54:48Z"
+  generation: 8
+  managedFields:
+  - apiVersion: networking.k8s.io/v1beta1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:status:
+        f:loadBalancer:
+          f:ingress: {}
+    manager: nginx-ingress-controller
+    operation: Update
+    time: "2022-02-16T17:55:47Z"
+  - apiVersion: extensions/v1beta1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:field.cattle.io/publicEndpoints: {}
+    manager: rancher
+    operation: Update
+    time: "2022-02-16T17:55:47Z"
+  - apiVersion: networking.k8s.io/v1beta1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:spec:
+        f:backend:
+          .: {}
+          f:serviceName: {}
+          f:servicePort: {}
+        f:rules: {}
+    manager: rancher
+    operation: Update
+    time: "2022-02-17T12:22:32Z"
+  name: dltsimdashnode1
+  namespace: dltsim-net
+  resourceVersion: "196957195"
+  selfLink: /apis/networking.k8s.io/v1beta1/namespaces/dltsim-net/ingresses/dltsimdashnode1
+  uid: ea3ef86f-352e-4bee-955a-28b432632acd
+spec:
+  backend:
+    serviceName: dltsim-http-service
+    servicePort: 8080
+  rules:
+  - host: dltsim-dash.unice.cust.tasfrance.com
+    http:
+      paths:
+      - backend:
+          serviceName: dltsim-http-service
+          servicePort: 8080
+        path: /
+        pathType: Prefix
+status:
+  loadBalancer:
+    ingress:
+    - ip: 192.168.111.11
+    - ip: 192.168.111.12
+    - ip: 192.168.111.13
+    - ip: 192.168.111.21
+    - ip: 192.168.111.22
+    - ip: 192.168.111.23

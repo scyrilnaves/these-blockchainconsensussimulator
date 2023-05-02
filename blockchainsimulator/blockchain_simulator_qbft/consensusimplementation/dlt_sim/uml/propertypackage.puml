@@ -1,0 +1,71 @@
+@startuml
+skinparam backgroundColor strategy
+skinparam defaultFontColor black
+skinparam defaultFontSize 40
+skinparam ArrowColor mediumturquoise
+skinparam ArrowThickness 5
+skinparam DefaultFontName Broadway
+package org.renaultleat.properties {
+  class NodeDevProperty {
+    + blocksize : int {static}
+    + deployed : String {static}
+    + ip : String {static}
+    + minapprovals : int {static}
+    + nodeid : int {static}
+    + nodeid_sec : int {static}
+    + ports : String {static}
+    + totalkeys : int {static}
+    + totalnodes : int {static}
+    + users : String {static}
+    + NodeDevProperty()
+  }
+  class NodeProperty {
+    + blocksize : int {static}
+    + deployed : String {static}
+    + httpports : String {static}
+    + ip : String {static}
+    + ips : String {static}
+    + isValidator : boolean {static}
+    + latency : long {static}
+    + minapprovals : int {static}
+    + nodeBehavior : int {static}
+    + nodeNetwork : String {static}
+    + peercount : int {static}
+    + peers : String {static}
+    + port : String {static}
+    + ports : String {static}
+    + roundChange : long {static}
+    + threshold : int {static}
+    + totalkeys : int {static}
+    + totalnodes : int {static}
+    + user : String {static}
+    + users : String {static}
+    + validators : int {static}
+    + NodeProperty()
+    + getBlockSize() : int {static}
+    + getCurrentPort() : int {static}
+    + getIP() : String {static}
+    + getIPS() : String {static}
+    + getPeerCount() : int {static}
+    + getPeers() : String {static}
+    + getRoundChange() : long {static}
+    + getValidators() : int {static}
+    + getnodeBehavior() : int {static}
+    + getnodeLatency() : long {static}
+    + getnodeNetwork() : String {static}
+    + gettotalNodes() : int {static}
+    + isValidator() : boolean {static}
+    + setBlockSize(input : int) {static}
+    + setIPS(input : String) {static}
+    + setIsValidator(input : boolean) {static}
+    + setPeerCount(input : int) {static}
+    + setPeers(input : String) {static}
+    + setRoundChange(input : long) {static}
+    + setValidators(input : int) {static}
+    + setnodeBehavior(input : int) {static}
+    + setnodeLatency(input : long) {static}
+    + setnodeNetwork(input : String) {static}
+    + settotalNodes(input : int) {static}
+  }
+}
+@enduml

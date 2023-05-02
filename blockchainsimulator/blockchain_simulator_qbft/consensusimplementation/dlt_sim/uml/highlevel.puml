@@ -1,0 +1,124 @@
+@startuml
+skinparam backgroundColor strategy
+skinparam defaultFontColor black
+skinparam defaultFontSize 40
+skinparam ArrowColor mediumturquoise
+skinparam ArrowThickness 5
+skinparam defaultFontStyle Broadway
+package org.renaultleat.consensus {
+  class Message {
+   
+  }
+  class BFTMessageHandler {
+   
+  }
+  class BFTMessagePool {
+   
+  }
+  class Synchronizer {
+  
+  }
+}
+package org.renaultleat.network {
+  class NetworkTopologyGenerator {
+   
+  }
+  class P2PServer {
+    
+  }
+  class QueueResource {
+   
+  }
+}
+package org.renaultleat.properties {
+  class NodeDevProperty {
+   
+  }
+  class NodeProperty {
+   
+  }
+}
+package org.renaultleat.node {
+  class NonValidator {
+    
+  }
+  class Transaction {
+ 
+  }
+  class Validator {
+   
+  }
+  class Wallet {
+  
+  }
+}
+package org.renaultleat.api {
+  class Simulator_controller {
+   
+  }
+  class Simulator_result {
+    
+  }
+  class Simulator_service {
+   
+  }
+}
+package org.renaultleat.crypto {
+  class CryptoUtil {
+   
+  }
+  class NodeKeyGenerator {
+   
+  }
+}
+package org.renaultleat.chain {
+  class Block {
+  
+  }
+  class BlockPool {
+   
+  }
+  class Blockchain {
+   
+  }
+  class TransactionPool {
+   
+  }
+}
+Simulator_controller --> NonValidator
+Simulator_service --> P2PServer
+Simulator_controller --> BlockPool
+Blockchain --> NonValidator
+BFTMessageHandler --> BFTMessagePool
+P2PServer -->  QueueResource
+TransactionPool --> Blockchain
+Block --> Transaction
+BlockPool --> Block
+Simulator_controller --> TransactionPool
+BFTMessageHandler --> TransactionPool
+BFTMessageHandler --> Wallet
+BFTMessageHandler --> BlockPool
+Simulator_controller --> QueueResource
+Simulator_controller --> Simulator_result
+Simulator_controller --> BFTMessagePool
+Simulator_service --> Wallet
+Simulator_service --> Simulator_result
+Simulator_controller --> Validator
+Simulator_controller --> Synchronizer
+BFTMessageHandler --> NonValidator
+P2PServer --> NonValidator
+P2PServer --> BFTMessagePool
+P2PServer --> Validator
+Blockchain --> Validator
+Simulator_controller --> Blockchain
+P2PServer --> TransactionPool
+Simulator_controller --> P2PServer
+P2PServer --> Wallet
+P2PServer --> BlockPool
+Simulator_controller --> Wallet
+BFTMessageHandler --> Blockchain
+BFTMessageHandler --> Validator
+Blockchain --> Block
+Simulator_controller -->  Simulator_service
+P2PServer --> Blockchain
+@enduml

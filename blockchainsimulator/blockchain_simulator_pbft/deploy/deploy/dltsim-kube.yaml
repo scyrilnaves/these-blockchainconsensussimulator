@@ -1,0 +1,2587 @@
+apiVersion: v1
+kind: List
+
+items:
+
+
+# --------------------------=== POD DEPLOYMENT 0 ===--------------------------
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: dltsim-0
+    namespace: dltsim-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: dltsim-0
+    template:
+      metadata:
+        labels:
+          name: dltsim-0
+          serviceSelector: dltsim-0-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: dltsim-0-node
+            image: cyrilthese/dltsim-pbft:latest
+            env:
+              - name: JAVA_ARGS
+                value: "-Xmx6000M -Xms5096M"
+            resources:
+              requests:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "2500Mi"
+              limits:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "3Gi"
+            ports:
+              - name: http
+                containerPort: 8080
+              - name: websocket
+                containerPort: 7080
+            volumeMounts:
+              - name: dltsim-data-0
+                mountPath: /datas/dltsim-0
+             
+        volumes:
+          - name: dltsim-data-0
+            persistentVolumeClaim:
+              claimName: dltsim-data-0
+
+#---------------------------------=NODES SERVICES 0=---------------------------------------
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dltsim-0
+    namespace: dltsim-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: dltsim-0-node
+    ports:
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: "7080"
+        protocol: TCP
+        port: 7080
+        targetPort: 7080
+#---------------------------------=NODES PERSISTANT VOLUME 0=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: dltsim-0
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 50Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/dltsim-0"
+#--------------------------=PERSISTENT VOLUME CLAIM 0=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: dltsim-data
+    name: dltsim-data-0
+    namespace: dltsim-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+     requests:
+        storage: 45Gi
+
+# --------------------------=== POD DEPLOYMENT 1 ===--------------------------
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: dltsim-1
+    namespace: dltsim-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: dltsim-1
+    template:
+      metadata:
+        labels:
+          name: dltsim-1
+          serviceSelector: dltsim-1-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: dltsim-1-node
+            image: cyrilthese/dltsim-pbft:latest
+            env:
+              - name: JAVA_ARGS
+                value: "-Xmx6000M -Xms5096M"
+            resources:
+              requests:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "2500Mi"
+              limits:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "3Gi"
+            ports:
+              - name: http
+                containerPort: 8080
+              - name: websocket
+                containerPort: 7080
+            volumeMounts:
+              - name: dltsim-data-1
+                mountPath: /datas/dltsim-1
+             
+        volumes:
+          - name: dltsim-data-1
+            persistentVolumeClaim:
+              claimName: dltsim-data-1
+
+#---------------------------------=NODES SERVICES 1=---------------------------------------
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dltsim-1
+    namespace: dltsim-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: dltsim-1-node
+    ports:
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: "7080"
+        protocol: TCP
+        port: 7080
+        targetPort: 7080
+#---------------------------------=NODES PERSISTANT VOLUME 1=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: dltsim-1
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 50Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/dltsim-1"
+#--------------------------=PERSISTENT VOLUME CLAIM 1=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: dltsim-data
+    name: dltsim-data-1
+    namespace: dltsim-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+     requests:
+        storage: 45Gi
+
+# --------------------------=== POD DEPLOYMENT 2 ===--------------------------
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: dltsim-2
+    namespace: dltsim-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: dltsim-2
+    template:
+      metadata:
+        labels:
+          name: dltsim-2
+          serviceSelector: dltsim-2-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: dltsim-2-node
+            image: cyrilthese/dltsim-pbft:latest
+            env:
+              - name: JAVA_ARGS
+                value: "-Xmx6000M -Xms5096M"
+            resources:
+              requests:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "2500Mi"
+              limits:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "3Gi"
+            ports:
+              - name: http
+                containerPort: 8080
+              - name: websocket
+                containerPort: 7080
+            volumeMounts:
+              - name: dltsim-data-2
+                mountPath: /datas/dltsim-2
+             
+        volumes:
+          - name: dltsim-data-2
+            persistentVolumeClaim:
+              claimName: dltsim-data-2
+
+#---------------------------------=NODES SERVICES 2=---------------------------------------
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dltsim-2
+    namespace: dltsim-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: dltsim-2-node
+    ports:
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: "7080"
+        protocol: TCP
+        port: 7080
+        targetPort: 7080
+#---------------------------------=NODES PERSISTANT VOLUME 2=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: dltsim-2
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 50Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/dltsim-2"
+#--------------------------=PERSISTENT VOLUME CLAIM 2=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: dltsim-data
+    name: dltsim-data-2
+    namespace: dltsim-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+     requests:
+        storage: 45Gi
+
+# --------------------------=== POD DEPLOYMENT 3 ===--------------------------
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: dltsim-3
+    namespace: dltsim-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: dltsim-3
+    template:
+      metadata:
+        labels:
+          name: dltsim-3
+          serviceSelector: dltsim-3-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: dltsim-3-node
+            image: cyrilthese/dltsim-pbft:latest
+            env:
+              - name: JAVA_ARGS
+                value: "-Xmx6000M -Xms5096M"
+            resources:
+              requests:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "2500Mi"
+              limits:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "3Gi"
+            ports:
+              - name: http
+                containerPort: 8080
+              - name: websocket
+                containerPort: 7080
+            volumeMounts:
+              - name: dltsim-data-3
+                mountPath: /datas/dltsim-3
+             
+        volumes:
+          - name: dltsim-data-3
+            persistentVolumeClaim:
+              claimName: dltsim-data-3
+
+#---------------------------------=NODES SERVICES 3=---------------------------------------
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dltsim-3
+    namespace: dltsim-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: dltsim-3-node
+    ports:
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: "7080"
+        protocol: TCP
+        port: 7080
+        targetPort: 7080
+#---------------------------------=NODES PERSISTANT VOLUME 3=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: dltsim-3
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 50Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/dltsim-3"
+#--------------------------=PERSISTENT VOLUME CLAIM 3=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: dltsim-data
+    name: dltsim-data-3
+    namespace: dltsim-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+     requests:
+        storage: 45Gi
+
+# --------------------------=== POD DEPLOYMENT 4 ===--------------------------
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: dltsim-4
+    namespace: dltsim-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: dltsim-4
+    template:
+      metadata:
+        labels:
+          name: dltsim-4
+          serviceSelector: dltsim-4-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: dltsim-4-node
+            image: cyrilthese/dltsim-pbft:latest
+            env:
+              - name: JAVA_ARGS
+                value: "-Xmx6000M -Xms5096M"
+            resources:
+              requests:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "2500Mi"
+              limits:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "3Gi"
+            ports:
+              - name: http
+                containerPort: 8080
+              - name: websocket
+                containerPort: 7080
+            volumeMounts:
+              - name: dltsim-data-4
+                mountPath: /datas/dltsim-4
+             
+        volumes:
+          - name: dltsim-data-4
+            persistentVolumeClaim:
+              claimName: dltsim-data-4
+
+#---------------------------------=NODES SERVICES 4=---------------------------------------
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dltsim-4
+    namespace: dltsim-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: dltsim-4-node
+    ports:
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: "7080"
+        protocol: TCP
+        port: 7080
+        targetPort: 7080
+#---------------------------------=NODES PERSISTANT VOLUME 4=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: dltsim-4
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 50Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/dltsim-4"
+#--------------------------=PERSISTENT VOLUME CLAIM 4=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: dltsim-data
+    name: dltsim-data-4
+    namespace: dltsim-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+     requests:
+        storage: 45Gi
+
+# --------------------------=== POD DEPLOYMENT 5 ===--------------------------
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: dltsim-5
+    namespace: dltsim-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: dltsim-5
+    template:
+      metadata:
+        labels:
+          name: dltsim-5
+          serviceSelector: dltsim-5-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: dltsim-5-node
+            image: cyrilthese/dltsim-pbft:latest
+            env:
+              - name: JAVA_ARGS
+                value: "-Xmx6000M -Xms5096M"
+            resources:
+              requests:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "2500Mi"
+              limits:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "3Gi"
+            ports:
+              - name: http
+                containerPort: 8080
+              - name: websocket
+                containerPort: 7080
+            volumeMounts:
+              - name: dltsim-data-5
+                mountPath: /datas/dltsim-5
+             
+        volumes:
+          - name: dltsim-data-5
+            persistentVolumeClaim:
+              claimName: dltsim-data-5
+
+#---------------------------------=NODES SERVICES 5=---------------------------------------
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dltsim-5
+    namespace: dltsim-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: dltsim-5-node
+    ports:
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: "7080"
+        protocol: TCP
+        port: 7080
+        targetPort: 7080
+#---------------------------------=NODES PERSISTANT VOLUME 5=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: dltsim-5
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 50Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/dltsim-5"
+#--------------------------=PERSISTENT VOLUME CLAIM 5=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: dltsim-data
+    name: dltsim-data-5
+    namespace: dltsim-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+     requests:
+        storage: 45Gi
+
+# --------------------------=== POD DEPLOYMENT 6 ===--------------------------
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: dltsim-6
+    namespace: dltsim-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: dltsim-6
+    template:
+      metadata:
+        labels:
+          name: dltsim-6
+          serviceSelector: dltsim-6-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: dltsim-6-node
+            image: cyrilthese/dltsim-pbft:latest
+            env:
+              - name: JAVA_ARGS
+                value: "-Xmx6000M -Xms5096M"
+            resources:
+              requests:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "2500Mi"
+              limits:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "3Gi"
+            ports:
+              - name: http
+                containerPort: 8080
+              - name: websocket
+                containerPort: 7080
+            volumeMounts:
+              - name: dltsim-data-6
+                mountPath: /datas/dltsim-6
+             
+        volumes:
+          - name: dltsim-data-6
+            persistentVolumeClaim:
+              claimName: dltsim-data-6
+
+#---------------------------------=NODES SERVICES 6=---------------------------------------
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dltsim-6
+    namespace: dltsim-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: dltsim-6-node
+    ports:
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: "7080"
+        protocol: TCP
+        port: 7080
+        targetPort: 7080
+#---------------------------------=NODES PERSISTANT VOLUME 6=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: dltsim-6
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 50Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/dltsim-6"
+#--------------------------=PERSISTENT VOLUME CLAIM 6=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: dltsim-data
+    name: dltsim-data-6
+    namespace: dltsim-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+     requests:
+        storage: 45Gi
+
+# --------------------------=== POD DEPLOYMENT 7 ===--------------------------
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: dltsim-7
+    namespace: dltsim-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: dltsim-7
+    template:
+      metadata:
+        labels:
+          name: dltsim-7
+          serviceSelector: dltsim-7-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: dltsim-7-node
+            image: cyrilthese/dltsim-pbft:latest
+            env:
+              - name: JAVA_ARGS
+                value: "-Xmx6000M -Xms5096M"
+            resources:
+              requests:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "2500Mi"
+              limits:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "3Gi"
+            ports:
+              - name: http
+                containerPort: 8080
+              - name: websocket
+                containerPort: 7080
+            volumeMounts:
+              - name: dltsim-data-7
+                mountPath: /datas/dltsim-7
+             
+        volumes:
+          - name: dltsim-data-7
+            persistentVolumeClaim:
+              claimName: dltsim-data-7
+
+#---------------------------------=NODES SERVICES 7=---------------------------------------
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dltsim-7
+    namespace: dltsim-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: dltsim-7-node
+    ports:
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: "7080"
+        protocol: TCP
+        port: 7080
+        targetPort: 7080
+#---------------------------------=NODES PERSISTANT VOLUME 7=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: dltsim-7
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 50Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/dltsim-7"
+#--------------------------=PERSISTENT VOLUME CLAIM 7=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: dltsim-data
+    name: dltsim-data-7
+    namespace: dltsim-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+     requests:
+        storage: 45Gi
+
+# --------------------------=== POD DEPLOYMENT 8 ===--------------------------
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: dltsim-8
+    namespace: dltsim-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: dltsim-8
+    template:
+      metadata:
+        labels:
+          name: dltsim-8
+          serviceSelector: dltsim-8-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: dltsim-8-node
+            image: cyrilthese/dltsim-pbft:latest
+            env:
+              - name: JAVA_ARGS
+                value: "-Xmx6000M -Xms5096M"
+            resources:
+              requests:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "2500Mi"
+              limits:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "3Gi"
+            ports:
+              - name: http
+                containerPort: 8080
+              - name: websocket
+                containerPort: 7080
+            volumeMounts:
+              - name: dltsim-data-8
+                mountPath: /datas/dltsim-8
+             
+        volumes:
+          - name: dltsim-data-8
+            persistentVolumeClaim:
+              claimName: dltsim-data-8
+
+#---------------------------------=NODES SERVICES 8=---------------------------------------
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dltsim-8
+    namespace: dltsim-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: dltsim-8-node
+    ports:
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: "7080"
+        protocol: TCP
+        port: 7080
+        targetPort: 7080
+#---------------------------------=NODES PERSISTANT VOLUME 8=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: dltsim-8
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 50Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/dltsim-8"
+#--------------------------=PERSISTENT VOLUME CLAIM 8=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: dltsim-data
+    name: dltsim-data-8
+    namespace: dltsim-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+     requests:
+        storage: 45Gi
+
+# --------------------------=== POD DEPLOYMENT 9 ===--------------------------
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: dltsim-9
+    namespace: dltsim-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: dltsim-9
+    template:
+      metadata:
+        labels:
+          name: dltsim-9
+          serviceSelector: dltsim-9-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: dltsim-9-node
+            image: cyrilthese/dltsim-pbft:latest
+            env:
+              - name: JAVA_ARGS
+                value: "-Xmx6000M -Xms5096M"
+            resources:
+              requests:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "2500Mi"
+              limits:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "3Gi"
+            ports:
+              - name: http
+                containerPort: 8080
+              - name: websocket
+                containerPort: 7080
+            volumeMounts:
+              - name: dltsim-data-9
+                mountPath: /datas/dltsim-9
+             
+        volumes:
+          - name: dltsim-data-9
+            persistentVolumeClaim:
+              claimName: dltsim-data-9
+
+#---------------------------------=NODES SERVICES 9=---------------------------------------
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dltsim-9
+    namespace: dltsim-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: dltsim-9-node
+    ports:
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: "7080"
+        protocol: TCP
+        port: 7080
+        targetPort: 7080
+#---------------------------------=NODES PERSISTANT VOLUME 9=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: dltsim-9
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 50Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/dltsim-9"
+#--------------------------=PERSISTENT VOLUME CLAIM 9=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: dltsim-data
+    name: dltsim-data-9
+    namespace: dltsim-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+     requests:
+        storage: 45Gi
+
+# --------------------------=== POD DEPLOYMENT 10 ===--------------------------
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: dltsim-10
+    namespace: dltsim-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: dltsim-10
+    template:
+      metadata:
+        labels:
+          name: dltsim-10
+          serviceSelector: dltsim-10-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: dltsim-10-node
+            image: cyrilthese/dltsim-pbft:latest
+            env:
+              - name: JAVA_ARGS
+                value: "-Xmx6000M -Xms5096M"
+            resources:
+              requests:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "2500Mi"
+              limits:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "3Gi"
+            ports:
+              - name: http
+                containerPort: 8080
+              - name: websocket
+                containerPort: 7080
+            volumeMounts:
+              - name: dltsim-data-10
+                mountPath: /datas/dltsim-10
+             
+        volumes:
+          - name: dltsim-data-10
+            persistentVolumeClaim:
+              claimName: dltsim-data-10
+
+#---------------------------------=NODES SERVICES 10=---------------------------------------
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dltsim-10
+    namespace: dltsim-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: dltsim-10-node
+    ports:
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: "7080"
+        protocol: TCP
+        port: 7080
+        targetPort: 7080
+#---------------------------------=NODES PERSISTANT VOLUME 10=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: dltsim-10
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 50Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/dltsim-10"
+#--------------------------=PERSISTENT VOLUME CLAIM 10=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: dltsim-data
+    name: dltsim-data-10
+    namespace: dltsim-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+     requests:
+        storage: 45Gi
+
+# --------------------------=== POD DEPLOYMENT 11 ===--------------------------
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: dltsim-11
+    namespace: dltsim-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: dltsim-11
+    template:
+      metadata:
+        labels:
+          name: dltsim-11
+          serviceSelector: dltsim-11-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: dltsim-11-node
+            image: cyrilthese/dltsim-pbft:latest
+            env:
+              - name: JAVA_ARGS
+                value: "-Xmx6000M -Xms5096M"
+            resources:
+              requests:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "2500Mi"
+              limits:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "3Gi"
+            ports:
+              - name: http
+                containerPort: 8080
+              - name: websocket
+                containerPort: 7080
+            volumeMounts:
+              - name: dltsim-data-11
+                mountPath: /datas/dltsim-11
+             
+        volumes:
+          - name: dltsim-data-11
+            persistentVolumeClaim:
+              claimName: dltsim-data-11
+
+#---------------------------------=NODES SERVICES 11=---------------------------------------
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dltsim-11
+    namespace: dltsim-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: dltsim-11-node
+    ports:
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: "7080"
+        protocol: TCP
+        port: 7080
+        targetPort: 7080
+#---------------------------------=NODES PERSISTANT VOLUME 11=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: dltsim-11
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 50Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/dltsim-11"
+#--------------------------=PERSISTENT VOLUME CLAIM 11=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: dltsim-data
+    name: dltsim-data-11
+    namespace: dltsim-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+     requests:
+        storage: 45Gi
+
+# --------------------------=== POD DEPLOYMENT 12 ===--------------------------
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: dltsim-12
+    namespace: dltsim-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: dltsim-12
+    template:
+      metadata:
+        labels:
+          name: dltsim-12
+          serviceSelector: dltsim-12-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: dltsim-12-node
+            image: cyrilthese/dltsim-pbft:latest
+            env:
+              - name: JAVA_ARGS
+                value: "-Xmx6000M -Xms5096M"
+            resources:
+              requests:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "2500Mi"
+              limits:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "3Gi"
+            ports:
+              - name: http
+                containerPort: 8080
+              - name: websocket
+                containerPort: 7080
+            volumeMounts:
+              - name: dltsim-data-12
+                mountPath: /datas/dltsim-12
+             
+        volumes:
+          - name: dltsim-data-12
+            persistentVolumeClaim:
+              claimName: dltsim-data-12
+
+#---------------------------------=NODES SERVICES 12=---------------------------------------
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dltsim-12
+    namespace: dltsim-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: dltsim-12-node
+    ports:
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: "7080"
+        protocol: TCP
+        port: 7080
+        targetPort: 7080
+#---------------------------------=NODES PERSISTANT VOLUME 12=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: dltsim-12
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 50Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/dltsim-12"
+#--------------------------=PERSISTENT VOLUME CLAIM 12=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: dltsim-data
+    name: dltsim-data-12
+    namespace: dltsim-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+     requests:
+        storage: 45Gi
+
+# --------------------------=== POD DEPLOYMENT 13 ===--------------------------
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: dltsim-13
+    namespace: dltsim-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: dltsim-13
+    template:
+      metadata:
+        labels:
+          name: dltsim-13
+          serviceSelector: dltsim-13-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: dltsim-13-node
+            image: cyrilthese/dltsim-pbft:latest
+            env:
+              - name: JAVA_ARGS
+                value: "-Xmx6000M -Xms5096M"
+            resources:
+              requests:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "2500Mi"
+              limits:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "3Gi"
+            ports:
+              - name: http
+                containerPort: 8080
+              - name: websocket
+                containerPort: 7080
+            volumeMounts:
+              - name: dltsim-data-13
+                mountPath: /datas/dltsim-13
+             
+        volumes:
+          - name: dltsim-data-13
+            persistentVolumeClaim:
+              claimName: dltsim-data-13
+
+#---------------------------------=NODES SERVICES 13=---------------------------------------
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dltsim-13
+    namespace: dltsim-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: dltsim-13-node
+    ports:
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: "7080"
+        protocol: TCP
+        port: 7080
+        targetPort: 7080
+#---------------------------------=NODES PERSISTANT VOLUME 13=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: dltsim-13
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 50Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/dltsim-13"
+#--------------------------=PERSISTENT VOLUME CLAIM 13=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: dltsim-data
+    name: dltsim-data-13
+    namespace: dltsim-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+     requests:
+        storage: 45Gi
+
+# --------------------------=== POD DEPLOYMENT 14 ===--------------------------
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: dltsim-14
+    namespace: dltsim-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: dltsim-14
+    template:
+      metadata:
+        labels:
+          name: dltsim-14
+          serviceSelector: dltsim-14-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: dltsim-14-node
+            image: cyrilthese/dltsim-pbft:latest
+            env:
+              - name: JAVA_ARGS
+                value: "-Xmx6000M -Xms5096M"
+            resources:
+              requests:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "2500Mi"
+              limits:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "3Gi"
+            ports:
+              - name: http
+                containerPort: 8080
+              - name: websocket
+                containerPort: 7080
+            volumeMounts:
+              - name: dltsim-data-14
+                mountPath: /datas/dltsim-14
+             
+        volumes:
+          - name: dltsim-data-14
+            persistentVolumeClaim:
+              claimName: dltsim-data-14
+
+#---------------------------------=NODES SERVICES 14=---------------------------------------
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dltsim-14
+    namespace: dltsim-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: dltsim-14-node
+    ports:
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: "7080"
+        protocol: TCP
+        port: 7080
+        targetPort: 7080
+#---------------------------------=NODES PERSISTANT VOLUME 14=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: dltsim-14
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 50Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/dltsim-14"
+#--------------------------=PERSISTENT VOLUME CLAIM 14=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: dltsim-data
+    name: dltsim-data-14
+    namespace: dltsim-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+     requests:
+        storage: 45Gi
+
+# --------------------------=== POD DEPLOYMENT 15 ===--------------------------
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: dltsim-15
+    namespace: dltsim-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: dltsim-15
+    template:
+      metadata:
+        labels:
+          name: dltsim-15
+          serviceSelector: dltsim-15-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: dltsim-15-node
+            image: cyrilthese/dltsim-pbft:latest
+            env:
+              - name: JAVA_ARGS
+                value: "-Xmx6000M -Xms5096M"
+            resources:
+              requests:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "2500Mi"
+              limits:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "3Gi"
+            ports:
+              - name: http
+                containerPort: 8080
+              - name: websocket
+                containerPort: 7080
+            volumeMounts:
+              - name: dltsim-data-15
+                mountPath: /datas/dltsim-15
+             
+        volumes:
+          - name: dltsim-data-15
+            persistentVolumeClaim:
+              claimName: dltsim-data-15
+
+#---------------------------------=NODES SERVICES 15=---------------------------------------
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dltsim-15
+    namespace: dltsim-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: dltsim-15-node
+    ports:
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: "7080"
+        protocol: TCP
+        port: 7080
+        targetPort: 7080
+#---------------------------------=NODES PERSISTANT VOLUME 15=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: dltsim-15
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 50Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/dltsim-15"
+#--------------------------=PERSISTENT VOLUME CLAIM 15=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: dltsim-data
+    name: dltsim-data-15
+    namespace: dltsim-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+     requests:
+        storage: 45Gi
+
+# --------------------------=== POD DEPLOYMENT 16 ===--------------------------
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: dltsim-16
+    namespace: dltsim-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: dltsim-16
+    template:
+      metadata:
+        labels:
+          name: dltsim-16
+          serviceSelector: dltsim-16-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: dltsim-16-node
+            image: cyrilthese/dltsim-pbft:latest
+            env:
+              - name: JAVA_ARGS
+                value: "-Xmx6000M -Xms5096M"
+            resources:
+              requests:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "2500Mi"
+              limits:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "3Gi"
+            ports:
+              - name: http
+                containerPort: 8080
+              - name: websocket
+                containerPort: 7080
+            volumeMounts:
+              - name: dltsim-data-16
+                mountPath: /datas/dltsim-16
+             
+        volumes:
+          - name: dltsim-data-16
+            persistentVolumeClaim:
+              claimName: dltsim-data-16
+
+#---------------------------------=NODES SERVICES 16=---------------------------------------
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dltsim-16
+    namespace: dltsim-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: dltsim-16-node
+    ports:
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: "7080"
+        protocol: TCP
+        port: 7080
+        targetPort: 7080
+#---------------------------------=NODES PERSISTANT VOLUME 16=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: dltsim-16
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 50Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/dltsim-16"
+#--------------------------=PERSISTENT VOLUME CLAIM 16=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: dltsim-data
+    name: dltsim-data-16
+    namespace: dltsim-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+     requests:
+        storage: 45Gi
+
+# --------------------------=== POD DEPLOYMENT 17 ===--------------------------
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: dltsim-17
+    namespace: dltsim-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: dltsim-17
+    template:
+      metadata:
+        labels:
+          name: dltsim-17
+          serviceSelector: dltsim-17-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: dltsim-17-node
+            image: cyrilthese/dltsim-pbft:latest
+            env:
+              - name: JAVA_ARGS
+                value: "-Xmx6000M -Xms5096M"
+            resources:
+              requests:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "2500Mi"
+              limits:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "3Gi"
+            ports:
+              - name: http
+                containerPort: 8080
+              - name: websocket
+                containerPort: 7080
+            volumeMounts:
+              - name: dltsim-data-17
+                mountPath: /datas/dltsim-17
+             
+        volumes:
+          - name: dltsim-data-17
+            persistentVolumeClaim:
+              claimName: dltsim-data-17
+
+#---------------------------------=NODES SERVICES 17=---------------------------------------
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dltsim-17
+    namespace: dltsim-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: dltsim-17-node
+    ports:
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: "7080"
+        protocol: TCP
+        port: 7080
+        targetPort: 7080
+#---------------------------------=NODES PERSISTANT VOLUME 17=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: dltsim-17
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 50Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/dltsim-17"
+#--------------------------=PERSISTENT VOLUME CLAIM 17=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: dltsim-data
+    name: dltsim-data-17
+    namespace: dltsim-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+     requests:
+        storage: 45Gi
+
+# --------------------------=== POD DEPLOYMENT 18 ===--------------------------
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: dltsim-18
+    namespace: dltsim-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: dltsim-18
+    template:
+      metadata:
+        labels:
+          name: dltsim-18
+          serviceSelector: dltsim-18-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: dltsim-18-node
+            image: cyrilthese/dltsim-pbft:latest
+            env:
+              - name: JAVA_ARGS
+                value: "-Xmx6000M -Xms5096M"
+            resources:
+              requests:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "2500Mi"
+              limits:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "3Gi"
+            ports:
+              - name: http
+                containerPort: 8080
+              - name: websocket
+                containerPort: 7080
+            volumeMounts:
+              - name: dltsim-data-18
+                mountPath: /datas/dltsim-18
+             
+        volumes:
+          - name: dltsim-data-18
+            persistentVolumeClaim:
+              claimName: dltsim-data-18
+
+#---------------------------------=NODES SERVICES 18=---------------------------------------
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dltsim-18
+    namespace: dltsim-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: dltsim-18-node
+    ports:
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: "7080"
+        protocol: TCP
+        port: 7080
+        targetPort: 7080
+#---------------------------------=NODES PERSISTANT VOLUME 18=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: dltsim-18
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 50Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/dltsim-18"
+#--------------------------=PERSISTENT VOLUME CLAIM 18=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: dltsim-data
+    name: dltsim-data-18
+    namespace: dltsim-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+     requests:
+        storage: 45Gi
+
+# --------------------------=== POD DEPLOYMENT 19 ===--------------------------
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: dltsim-19
+    namespace: dltsim-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: dltsim-19
+    template:
+      metadata:
+        labels:
+          name: dltsim-19
+          serviceSelector: dltsim-19-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: dltsim-19-node
+            image: cyrilthese/dltsim-pbft:latest
+            env:
+              - name: JAVA_ARGS
+                value: "-Xmx6000M -Xms5096M"
+            resources:
+              requests:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "2500Mi"
+              limits:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "3Gi"
+            ports:
+              - name: http
+                containerPort: 8080
+              - name: websocket
+                containerPort: 7080
+            volumeMounts:
+              - name: dltsim-data-19
+                mountPath: /datas/dltsim-19
+             
+        volumes:
+          - name: dltsim-data-19
+            persistentVolumeClaim:
+              claimName: dltsim-data-19
+
+#---------------------------------=NODES SERVICES 19=---------------------------------------
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dltsim-19
+    namespace: dltsim-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: dltsim-19-node
+    ports:
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: "7080"
+        protocol: TCP
+        port: 7080
+        targetPort: 7080
+#---------------------------------=NODES PERSISTANT VOLUME 19=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: dltsim-19
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 50Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/dltsim-19"
+#--------------------------=PERSISTENT VOLUME CLAIM 19=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: dltsim-data
+    name: dltsim-data-19
+    namespace: dltsim-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+     requests:
+        storage: 45Gi
+
+# --------------------------=== POD DEPLOYMENT 20 ===--------------------------
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: dltsim-20
+    namespace: dltsim-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: dltsim-20
+    template:
+      metadata:
+        labels:
+          name: dltsim-20
+          serviceSelector: dltsim-20-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: dltsim-20-node
+            image: cyrilthese/dltsim-pbft:latest
+            env:
+              - name: JAVA_ARGS
+                value: "-Xmx6000M -Xms5096M"
+            resources:
+              requests:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "2500Mi"
+              limits:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "3Gi"
+            ports:
+              - name: http
+                containerPort: 8080
+              - name: websocket
+                containerPort: 7080
+            volumeMounts:
+              - name: dltsim-data-20
+                mountPath: /datas/dltsim-20
+             
+        volumes:
+          - name: dltsim-data-20
+            persistentVolumeClaim:
+              claimName: dltsim-data-20
+
+#---------------------------------=NODES SERVICES 20=---------------------------------------
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dltsim-20
+    namespace: dltsim-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: dltsim-20-node
+    ports:
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: "7080"
+        protocol: TCP
+        port: 7080
+        targetPort: 7080
+#---------------------------------=NODES PERSISTANT VOLUME 20=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: dltsim-20
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 50Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/dltsim-20"
+#--------------------------=PERSISTENT VOLUME CLAIM 20=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: dltsim-data
+    name: dltsim-data-20
+    namespace: dltsim-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+     requests:
+        storage: 45Gi
+
+# --------------------------=== POD DEPLOYMENT 21 ===--------------------------
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: dltsim-21
+    namespace: dltsim-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: dltsim-21
+    template:
+      metadata:
+        labels:
+          name: dltsim-21
+          serviceSelector: dltsim-21-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: dltsim-21-node
+            image: cyrilthese/dltsim-pbft:latest
+            env:
+              - name: JAVA_ARGS
+                value: "-Xmx6000M -Xms5096M"
+            resources:
+              requests:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "2500Mi"
+              limits:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "3Gi"
+            ports:
+              - name: http
+                containerPort: 8080
+              - name: websocket
+                containerPort: 7080
+            volumeMounts:
+              - name: dltsim-data-21
+                mountPath: /datas/dltsim-21
+             
+        volumes:
+          - name: dltsim-data-21
+            persistentVolumeClaim:
+              claimName: dltsim-data-21
+
+#---------------------------------=NODES SERVICES 21=---------------------------------------
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dltsim-21
+    namespace: dltsim-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: dltsim-21-node
+    ports:
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: "7080"
+        protocol: TCP
+        port: 7080
+        targetPort: 7080
+#---------------------------------=NODES PERSISTANT VOLUME 21=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: dltsim-21
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 50Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/dltsim-21"
+#--------------------------=PERSISTENT VOLUME CLAIM 21=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: dltsim-data
+    name: dltsim-data-21
+    namespace: dltsim-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+     requests:
+        storage: 45Gi
+
+# --------------------------=== POD DEPLOYMENT 22 ===--------------------------
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: dltsim-22
+    namespace: dltsim-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: dltsim-22
+    template:
+      metadata:
+        labels:
+          name: dltsim-22
+          serviceSelector: dltsim-22-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: dltsim-22-node
+            image: cyrilthese/dltsim-pbft:latest
+            env:
+              - name: JAVA_ARGS
+                value: "-Xmx6000M -Xms5096M"
+            resources:
+              requests:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "2500Mi"
+              limits:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "3Gi"
+            ports:
+              - name: http
+                containerPort: 8080
+              - name: websocket
+                containerPort: 7080
+            volumeMounts:
+              - name: dltsim-data-22
+                mountPath: /datas/dltsim-22
+             
+        volumes:
+          - name: dltsim-data-22
+            persistentVolumeClaim:
+              claimName: dltsim-data-22
+
+#---------------------------------=NODES SERVICES 22=---------------------------------------
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dltsim-22
+    namespace: dltsim-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: dltsim-22-node
+    ports:
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: "7080"
+        protocol: TCP
+        port: 7080
+        targetPort: 7080
+#---------------------------------=NODES PERSISTANT VOLUME 22=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: dltsim-22
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 50Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/dltsim-22"
+#--------------------------=PERSISTENT VOLUME CLAIM 22=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: dltsim-data
+    name: dltsim-data-22
+    namespace: dltsim-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+     requests:
+        storage: 45Gi
+
+# --------------------------=== POD DEPLOYMENT 23 ===--------------------------
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: dltsim-23
+    namespace: dltsim-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: dltsim-23
+    template:
+      metadata:
+        labels:
+          name: dltsim-23
+          serviceSelector: dltsim-23-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: dltsim-23-node
+            image: cyrilthese/dltsim-pbft:latest
+            env:
+              - name: JAVA_ARGS
+                value: "-Xmx6000M -Xms5096M"
+            resources:
+              requests:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "2500Mi"
+              limits:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "3Gi"
+            ports:
+              - name: http
+                containerPort: 8080
+              - name: websocket
+                containerPort: 7080
+            volumeMounts:
+              - name: dltsim-data-23
+                mountPath: /datas/dltsim-23
+             
+        volumes:
+          - name: dltsim-data-23
+            persistentVolumeClaim:
+              claimName: dltsim-data-23
+
+#---------------------------------=NODES SERVICES 23=---------------------------------------
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dltsim-23
+    namespace: dltsim-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: dltsim-23-node
+    ports:
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: "7080"
+        protocol: TCP
+        port: 7080
+        targetPort: 7080
+#---------------------------------=NODES PERSISTANT VOLUME 23=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: dltsim-23
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 50Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/dltsim-23"
+#--------------------------=PERSISTENT VOLUME CLAIM 23=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: dltsim-data
+    name: dltsim-data-23
+    namespace: dltsim-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+     requests:
+        storage: 45Gi
+
+# --------------------------=== POD DEPLOYMENT 24 ===--------------------------
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: dltsim-24
+    namespace: dltsim-net
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        name: dltsim-24
+    template:
+      metadata:
+        labels:
+          name: dltsim-24
+          serviceSelector: dltsim-24-node
+      spec:
+        securityContext:
+          fsGroup: 101
+        containers:
+          - name: dltsim-24-node
+            image: cyrilthese/dltsim-pbft:latest
+            env:
+              - name: JAVA_ARGS
+                value: "-Xmx6000M -Xms5096M"
+            resources:
+              requests:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "2500Mi"
+              limits:
+                memory: "8Gi"
+                cpu: "3"
+                ephemeral-storage: "3Gi"
+            ports:
+              - name: http
+                containerPort: 8080
+              - name: websocket
+                containerPort: 7080
+            volumeMounts:
+              - name: dltsim-data-24
+                mountPath: /datas/dltsim-24
+             
+        volumes:
+          - name: dltsim-data-24
+            persistentVolumeClaim:
+              claimName: dltsim-data-24
+
+#---------------------------------=NODES SERVICES 24=---------------------------------------
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dltsim-24
+    namespace: dltsim-net
+  spec:
+    type: ClusterIP
+    selector:
+      name: dltsim-24-node
+    ports:
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: "7080"
+        protocol: TCP
+        port: 7080
+        targetPort: 7080
+#---------------------------------=NODES PERSISTANT VOLUME 24=---------------------------------------
+- apiVersion: v1
+  kind: PersistentVolume
+  metadata:
+    name: dltsim-24
+    labels:
+      type: local
+  spec:
+    storageClassName: manual
+    capacity:
+      storage: 50Gi
+    accessModes:
+      - ReadWriteOnce
+    persistentVolumeReclaimPolicy: Recycle
+    hostPath:
+      path: "/datas/dltsim-24"
+#--------------------------=PERSISTENT VOLUME CLAIM 24=------------------------------
+
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    labels:
+      app: dltsim-data
+    name: dltsim-data-24
+    namespace: dltsim-net
+  spec:
+    storageClassName: manual
+    accessModes:
+    - ReadWriteOnce
+    resources:
+     requests:
+        storage: 45Gi
+
+#--------------------------=HTTP SERVICE FOR FIRST , MID AND LAST NODE=--------------------------------
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dltsim-http-service
+    namespace: dltsim-net
+  spec:
+    type: ClusterIP
+    selector:
+      serviceSelector: dltsim-1-node
+    ports:
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dltsim-http-mid-service
+    namespace: dltsim-net
+  spec:
+    type: ClusterIP
+    selector:
+      serviceSelector: dltsim-22-node
+    ports:
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: dltsim-http-last-service
+    namespace: dltsim-net
+  spec:
+    type: ClusterIP
+    selector:
+      serviceSelector: dltsim-24-node
+    ports:
+      - name: "8080"
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+####################################### BENCHMARK MACHINE #########################
+
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: ubuntu
+    namespace: dltsim-net
+  spec:
+    replicas: 1
+    selector:
+        matchLabels:
+          name: ubuntu-deployment
+    template:
+      metadata:
+        name: ubuntu-deployment
+        labels:
+          app: ubuntu
+          tier: backend
+          name: ubuntu-deployment
+      spec:
+        containers:
+        - name: ubuntu
+          image: cyrilthese/masternode:latest
+          command:
+            - "sleep"
+            - "604800"
+          resources:
+            limits:
+              cpu: "8"
+              memory: "8Gi"
+            requests:
+              cpu: "8"
+              memory: "8Gi"
+          imagePullPolicy: IfNotPresent
+        restartPolicy: Always

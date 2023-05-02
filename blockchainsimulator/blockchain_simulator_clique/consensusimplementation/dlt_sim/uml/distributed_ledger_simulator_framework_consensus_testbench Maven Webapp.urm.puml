@@ -1,0 +1,528 @@
+@startuml
+package org.renaultleat.consensus {
+  class IBFTMessageHandler {
+    + blockPool : BlockPool
+    + blockchain : Blockchain
+    + currentuser : String
+    - minapprovals : int
+    + nodeCommunicator : NodeCommunicator
+    + nonValidator : NonValidator
+    + pbftMessagePool : IBFTMessagePool
+    + transactionPool : TransactionPool
+    + validator : Validator
+    + wallet : Wallet
+    + IBFTMessageHandler(blockChain : Blockchain, transactionPool : TransactionPool, wallet : Wallet, pbftMessagePool : IBFTMessagePool, validator : Validator, nonValidator : NonValidator, nodeCommunicator : NodeCommunicator, blockpool : BlockPool, currentuser : String)
+    + broadCastCommit(data : Message, message : String)
+    + broadCastPrePrepare(block : Block, message : String)
+    + broadCastPrepare(data : Message, message : String)
+    + broadCastRoundChange(data : Message, message : String, user : String)
+    + handleMessage(jsonObject : JSONObject)
+  }
+  class IBFTMessagePool {
+    + commitPool : Map<String, CopyOnWriteArrayList<String>>
+    + preparePool : Map<String, CopyOnWriteArrayList<String>>
+    + roundChangePool : Map<String, CopyOnWriteArrayList<String>>
+    + IBFTMessagePool()
+    + addMessage(message : Message) : boolean
+    + clearAllMessagePool()
+    + clearAllMessagePoolForBlockHash(blockhash : String)
+    + clearCommitMessagePoolForBlockHash(blockhash : String)
+    + clearPrepareMessagePoolForBlockHash(blockhash : String)
+    + clearRoundChangeMessagePoolForBlockHash(blockhash : String)
+    + existingCommitMessage(message : Message) : boolean
+    + existingMessage(message : Message) : boolean
+    + existingPrepareMessage(message : Message) : boolean
+    + existingRoundChangeMessage(message : Message) : boolean
+    + getCommmitPool() : Map<String, CopyOnWriteArrayList<String>>
+    + getPreparePool() : Map<String, CopyOnWriteArrayList<String>>
+    + getRoundChangePool() : Map<String, CopyOnWriteArrayList<String>>
+    + getSizeofCommitMessagePoolForBlockHash(blockhash : String) : int
+    + getSizeofPrepareMessagePoolForBlockHash(blockhash : String) : int
+    + getSizeofRoundChangeMessagePoolForBlockHash(blockhash : String) : int
+    + isValidMessage(message : Message) : boolean
+    + message(type : String, block : Block, wallet : Wallet, roundCounter : int) : Message
+    + message(type : String, inmessage : Message, wallet : Wallet, roundCounter : int) : Message
+    + setCommmitPool(commmitPool : Map<String, CopyOnWriteArrayList<String>>)
+    + setPreparePool(preparePool : Map<String, CopyOnWriteArrayList<String>>)
+    + setRoundChangePool(roundChangePool : Map<String, CopyOnWriteArrayList<String>>)
+  }
+  class Message {
+    ~ blockHash : String
+    ~ contents : String
+    ~ messageSender : String
+    ~ messagesignature : String
+    ~ round : int
+    ~ type : String
+    + Message(type : String, blockHash : String, messagesignature : String, messageSender : String, contents : String, round : int)
+    + getBlockHash() : String
+    + getContents() : String
+    + getMessageSender() : String
+    + getMessagesignature() : String
+    + getRound() : int
+    + getType() : String
+    + setBlockHash(blockHash : String)
+    + setContents(contents : String)
+    + setMessageSender(messageSender : String)
+    + setMessagesignature(messagesignature : String)
+    + setRound(round : int)
+    + setType(type : String)
+  }
+  class Synchronizer {
+    + commitconsensusReached : Map<String, Boolean>
+    + consensusReached : Map<String, Boolean>
+    + consensusincourse : boolean
+    + prepareconsensusReached : Map<String, Boolean>
+    + roundchangeconsensusReached : Map<String, Boolean>
+    + thresholdReached : boolean
+    + Synchronizer()
+  }
+}
+package org.renaultleat.network {
+  class NetworkTopologyGenerator {
+    + NetworkTopologyGenerator()
+    + generateRingLatticeTopologyCSV(totalNodeCount : int, meanDegree : int) {static}
+    + generateWattsStrogatzTopologyCSV(totalNodeCount : int, meanDegree : int) {static}
+    + main(args : String[]) {static}
+    + writeToCSV(totalConnectionMap : Map<Integer, Map<Integer, Map<Integer, Boolean>>>, topology : String) {static}
+  }
+  class P2PServer {
+    + blockPool : BlockPool
+    + blockchain : Blockchain
+    + currentuser : String
+    + ibftMessagePool : IBFTMessagePool
+    + nodeCommunicator : NodeCommunicator
+    + nonValidator : NonValidator
+    + queueResource : QueueResource
+    + transactionPool : TransactionPool
+    + validator : Validator
+    + wallet : Wallet
+    + P2PServer(blockChain : Blockchain, transactionPool : TransactionPool, wallet : Wallet, ibftMessagePool : IBFTMessagePool, validator : Validator, blockPool : BlockPool, nodeCommunicator : NodeCommunicator, queueResource : QueueResource, nonValidator : NonValidator)
+    + P2PServer(blockChain : Blockchain, transactionPool : TransactionPool, wallet : Wallet, ibftMessagePool : IBFTMessagePool, validator : Validator, nonValidator : NonValidator, blockPool : BlockPool, queueResource : QueueResource)
+    + communicate(message : String)
+    + connect()
+    + connectToPeers()
+    + getPeerList() : List<String>
+    + listenToPeers(user : String, nodeCommunicator : NodeCommunicator, peers : List<String>)
+    + startSimulationBroadcast(no_of_transactions : int, no_of_threads : int)
+    + startSimulationBroadcastSingle(no_of_transactions : int)
+  }
+  class QueueResource {
+    ~ messageBlockingQueue : BlockingQueue<JSONObject>
+    ~ transactionBlockingQueue : BlockingQueue<JSONObject>
+    + QueueResource()
+    + getMessageBlockingQueue() : BlockingQueue<JSONObject>
+    + getTransactionBlockingQueue() : BlockingQueue<JSONObject>
+    + setMessageBlockingQueue(messageBlockingQueue : BlockingQueue<JSONObject>)
+    + setTransactionBlockingQueue(transactionBlockingQueue : BlockingQueue<JSONObject>)
+  }
+}
+package org.renaultleat.properties {
+  class NodeDevProperty {
+    + blocksize : int {static}
+    + deployed : String {static}
+    + ip : String {static}
+    + minapprovals : int {static}
+    + nodeid : int {static}
+    + nodeid_sec : int {static}
+    + ports : String {static}
+    + totalkeys : int {static}
+    + totalnodes : int {static}
+    + users : String {static}
+    + NodeDevProperty()
+  }
+  class NodeProperty {
+    + blocksize : int {static}
+    + deployed : String {static}
+    + httpports : String {static}
+    + ip : String {static}
+    + ips : String {static}
+    + isValidator : boolean {static}
+    + latency : long {static}
+    + minapprovals : int {static}
+    + nodeBehavior : int {static}
+    + nodeNetwork : String {static}
+    + peercount : int {static}
+    + peers : String {static}
+    + port : String {static}
+    + ports : String {static}
+    + roundChange : long {static}
+    + totalkeys : int {static}
+    + totalnodes : int {static}
+    + user : String {static}
+    + users : String {static}
+    + validators : int {static}
+    + NodeProperty()
+    + getBlockSize() : int {static}
+    + getCurrentPort() : int {static}
+    + getIP() : String {static}
+    + getIPS() : String {static}
+    + getPeerCount() : int {static}
+    + getPeers() : String {static}
+    + getRoundChange() : long {static}
+    + getValidators() : int {static}
+    + getnodeBehavior() : int {static}
+    + getnodeLatency() : long {static}
+    + getnodeNetwork() : String {static}
+    + gettotalNodes() : int {static}
+    + isValidator() : boolean {static}
+    + setBlockSize(input : int) {static}
+    + setIPS(input : String) {static}
+    + setIsValidator(input : boolean) {static}
+    + setPeerCount(input : int) {static}
+    + setPeers(input : String) {static}
+    + setRoundChange(input : long) {static}
+    + setValidators(input : int) {static}
+    + setnodeBehavior(input : int) {static}
+    + setnodeLatency(input : long) {static}
+    + setnodeNetwork(input : String) {static}
+    + settotalNodes(input : int) {static}
+  }
+}
+package org.renaultleat.node {
+  class NonValidator {
+    ~ allNodePublicKeys : List<String>
+    + NonValidator()
+    + generateAddresses() : List<String>
+    + isValidNonValidator(nodePublicKey : String) : boolean
+  }
+  class Transaction {
+    + from : String
+    + hash : String
+    + id : String
+    + input : String
+    + nodeid : String
+    + nodeindex : int
+    + signature : String
+    + timestamp : Timestamp
+    + Transaction(data : String, wallet : Wallet)
+    + Transaction(id : String, from : String, nodeId : String, nodeIndex : int, input : String, inputTimestamp : Timestamp, hash : String, signature : String)
+    + getFrom() : String
+    + getHash() : String
+    + getId() : String
+    + getInput() : String
+    + getNodeid() : String
+    + getNodeindex() : int
+    + getSignature() : String
+    + getTimestamp() : Timestamp
+    + setFrom(from : String)
+    + setHash(hash : String)
+    + setId(id : String)
+    + setInput(input : String)
+    + setNodeid(nodeid : String)
+    + setNodeindex(nodeindex : int)
+    + setSignature(signature : String)
+    + setTimestamp(timestamp : Timestamp)
+    + verifyTransaction(transaction : Transaction) : boolean {static}
+  }
+  class Validator {
+    ~ allNodePublicKeys : List<String>
+    + Validator()
+    + generateAddresses() : List<String>
+    + isValidValidator(nodePublicKey : String) : boolean
+  }
+  class Wallet {
+    ~ keypair : KeyPair
+    + nodeid : String
+    + nodeindex : int {static}
+    + nodeproperty : String {static}
+    ~ publicKey : String
+    + Wallet()
+    + createTransaction(message : String) : Transaction
+    + getKeyPair() : KeyPair
+    + getNodeId() : String
+    + getNodeIndex() : int {static}
+    + getNodeproperty() : String {static}
+    + getPublicKey() : String
+    + initalise(index : int)
+    + setnodeproperty(input : String) {static}
+    + signData(message : String) : String
+  }
+}
+package org.renaultleat.api {
+  class Simulator_controller {
+    ~ blockPool : BlockPool
+    ~ blockchain : Blockchain
+    ~ gson : Gson
+    ~ ibftConsensusMessageHandler : IBFTConsensusMessageHandler
+    ~ ibftConsensusRoundChangeHandler : IBFTConsensusRoundChangeHandler
+    ~ ibftMessagePool : IBFTMessagePool
+    ~ ibftTransactionMessageHandler : IBFTTransactionMessageHandler
+    ~ nonValidator : NonValidator
+    ~ p2pserver : P2PServer
+    ~ queueResource : QueueResource
+    ~ simulator_collator : Simulator_collator
+    ~ simulator_result : Simulator_result
+    ~ simulator_service : Simulator_service
+    ~ synchronizer : Synchronizer
+    ~ transactionPool : TransactionPool
+    ~ validator : Validator
+    ~ wallet : Wallet
+    + Simulator_controller()
+    + getAsValidator() : String
+    + getBlockNo() : String
+    + getBlockSize() : String
+    + getBlocks() : String
+    + getBlocksinPool() : String
+    + getCommitRate() : String
+    + getFinalisedTPS() : String
+    + getIP() : String
+    + getNodeBehavior() : String
+    + getNodeLatency() : String
+    + getNodeNetwork() : String
+    + getNodeProperty() : String
+    + getPeers() : String
+    + getPrepareRate() : String
+    + getProcessedTPS() : String
+    + getRoundChange() : String
+    + getRoundChangeRate() : String
+    + getTotalNodes() : String
+    + getTotalValidators() : String
+    + getTransactionsValidatedNo() : String
+    + getTransactionsinPoolNo(roundno : String) : String
+    + getVersion() : String
+    + initiateConnection() : String
+    + listentoPeers() : String
+    + sendMessageToPeer(message : String) : String
+    + setRoundchangeTimeOut(value : String) : String
+    + startResultCollator() : String
+    + startSimulationSingle(notxs : String) : String
+    + stopResultCollator() : String
+    + storeAsValidator(value : String) : String
+    + storeBlockSize(value : String) : String
+    + storeNodeBehavior(value : String) : String
+    + storeNodeLatency(value : String) : String
+    + storeNodeNetwork(value : String) : String
+    + storeNodeProperty(value : String) : String
+    + storePeers(value : String) : String
+    + storeTotalNodes(value : String) : String
+    + storeTotalValidators(value : String) : String
+  }
+  class Simulator_result {
+    + commitCounter : Map<Timestamp, Integer>
+    + finalisedTpsStorage : Map<Timestamp, Integer>
+    + inputTpsStorage : Map<Timestamp, Integer>
+    + prepareCounter : Map<Timestamp, Integer>
+    + roundChangeCounter : Map<Timestamp, Integer>
+    + Simulator_result()
+  }
+  class Simulator_service {
+    ~ p2pServer : P2PServer
+    ~ simulator_result : Simulator_result
+    ~ wallet : Wallet
+    + Simulator_service(p2pServer : P2PServer, wallet : Wallet, simulator_result : Simulator_result)
+    + Simulator_service(wallet : Wallet)
+    + getAsValidator() : boolean
+    + getBlockSize() : int
+    + getBlocks() : String
+    + getBlocksinBlockPool() : String
+    + getCommitMessageRate() : Map<Timestamp, Integer>
+    + getCommitTPSJSON() : List<JSONObject>
+    + getFinalisedTPS() : Map<Timestamp, Integer>
+    + getFinalisedTPSJSON() : List<JSONObject>
+    + getIP() : String
+    + getIPS() : String
+    + getInputTPS() : Map<Timestamp, Integer>
+    + getInputTPSJSON() : List<JSONObject>
+    + getJSONData(objData : Map<Timestamp, Integer>) : List<JSONObject>
+    + getNodeBehavior() : String
+    + getNodeLatency() : long
+    + getNodeNetwork() : String
+    + getNodeProperty() : int
+    + getNoofBlocks() : int
+    + getPrepareMessageRate() : Map<Timestamp, Integer>
+    + getPrepareTPSJSON() : List<JSONObject>
+    + getRoundChange() : long
+    + getRoundChangeMessageRate() : Map<Timestamp, Integer>
+    + getRoundChangeTPSJSON() : List<JSONObject>
+    + getTotalNodes() : int
+    + getTotalTransactionsValidatedNo() : String
+    + getTotalValidators() : int
+    + getTransactionsinPoolNo(roundno : String) : String
+    + getVersion() : String
+    + initiateConnection()
+    + listentoPeers()
+    + sendMessageToPeer(message : String)
+    + setRoundChange(value : String)
+    + startSimulation(notxs : String, nothreads : String)
+    + startSimulationSingle(notxs : String)
+    + storeAsValidator(value : String)
+    + storeBlockSize(value : String)
+    + storeIPS(value : String)
+    + storeNodeBehavior(value : String)
+    + storeNodeLatency(value : String)
+    + storeNodeNetwork(value : String)
+    + storeNodeProperty(value : String)
+    + storeTotalNodes(value : String)
+    + storeTotalValidators(value : String)
+  }
+}
+package org.renaultleat.crypto {
+  class CryptoUtil {
+    - privatekeyfile : String {static}
+    - pubkeyfile : String {static}
+    - CryptoUtil()
+    + getFileFromResource(fileName : String) : File {static}
+    - getFileFromResourceAsStream(fileName : String) : InputStream {static}
+    + getHash(data : String) : String {static}
+    + getKeyPair(index : int) : KeyPair {static}
+    + getPrivateKey(index : int) : PrivateKey {static}
+    + getPublicKey(index : int) : PublicKey {static}
+    + getPublicKeyString(index : int) : String {static}
+    + getSignature(index : int, message : String) : String {static}
+    + getUniqueIdentifier() : String {static}
+    + verify(index : int, signatureinput : String, message : String) : boolean {static}
+    + verify(pubKeyStr : String, signatureinput : String, message : String) : boolean {static}
+  }
+  class NodeKeyGenerator {
+    + NodeKeyGenerator()
+    + generateRSAKeyPair(totalkeys : int) {static}
+    + main(args : String[]) {static}
+  }
+}
+package org.renaultleat.chain {
+  class Block {
+    ~ blocknumber : int
+    ~ blocktime : Timestamp
+    ~ commitMessageValidators : CopyOnWriteArrayList<String>
+    ~ hash : String
+    ~ prepareMessageValidators : CopyOnWriteArrayList<String>
+    ~ previousblockhash : String
+    ~ proposer : String
+    ~ roundno : int
+    ~ signature : String
+    ~ transactions : CopyOnWriteArrayList<Transaction>
+    + Block()
+    + Block(timestamp : Timestamp, previousblockhash : String, currentblockhash : String, data : CopyOnWriteArrayList<Transaction>, blockproposer : String, signature : String, blocknum : int)
+    + createBlock(lastBlock : Block, data : CopyOnWriteArrayList<Transaction>, wallet : Wallet) : Block {static}
+    + generateBlockHash(block : Block) : String {static}
+    + generateBlockHash(lastblockHash : String, transactions : List<Transaction>) : String {static}
+    + generateGenesis() : Block {static}
+    + getBlockData() : CopyOnWriteArrayList<Transaction>
+    + getBlockDetails() : String
+    + getBlockHash() : String
+    + getBlockNumber() : int
+    + getBlockProposer() : String
+    + getBlockSignature() : String
+    + getBlockTimestamp() : Timestamp
+    + getBlocknumber() : int
+    + getBlocktime() : Timestamp
+    + getCommitMessages() : CopyOnWriteArrayList<String>
+    + getHash() : String
+    + getLastBlockHash() : String
+    + getPrepareMessages() : CopyOnWriteArrayList<String>
+    + getPreviousblockhash() : String
+    + getProposer() : String
+    + getRoundNo() : int
+    + getSignature() : String
+    + getTransactions() : CopyOnWriteArrayList<Transaction>
+    + setBlocknumber(blocknumber : int)
+    + setBlocktime(blocktime : Timestamp)
+    + setCommitMessages(commitMessages : CopyOnWriteArrayList<String>)
+    + setHash(hash : String)
+    + setPrepareMessages(prepareMessages : CopyOnWriteArrayList<String>)
+    + setPreviousblockhash(previousblockhash : String)
+    + setProposer(proposer : String)
+    + setRoundNo(roundno : int)
+    + setSignature(signature : String)
+    + setTransactions(transactions : CopyOnWriteArrayList<Transaction>)
+    + signBlockHash(blockHash : String, wallet : Wallet) : String {static}
+    + verifyBlock(block : Block) : boolean {static}
+    + verifyProposer(block : Block, proposer : String) : boolean {static}
+  }
+  class BlockPool {
+    + blockIds : CopyOnWriteArrayList<Integer>
+    ~ blocks : CopyOnWriteArrayList<Block>
+    + BlockPool()
+    + addBlock(block : Block)
+    + blockExists(inblock : Block) : boolean
+    + clearBlockPool()
+    + getBlockforHash(blockHash : String) : Block
+    + getBlocks() : List<Block>
+    + removeBlock(inblockhash : String)
+  }
+  class Blockchain {
+    + blockIds : CopyOnWriteArrayList<Integer>
+    ~ chain : CopyOnWriteArrayList<Block>
+    ~ nonValidator : NonValidator
+    ~ nonValidators : CopyOnWriteArrayList<String>
+    + roundCounter : AtomicInteger
+    ~ validator : Validator
+    ~ validators : CopyOnWriteArrayList<String>
+    + Blockchain()
+    + Blockchain(validator : Validator, nonValidator : NonValidator)
+    + addBlock(block : Block) : Block
+    + addUpdatedBlock(hash : String, blockPool : BlockPool, pbftMessagePool : IBFTMessagePool)
+    + createBlock(transactions : CopyOnWriteArrayList<Transaction>, wallet : Wallet) : Block
+    + getChain() : CopyOnWriteArrayList<Block>
+    + getNonValidators() : CopyOnWriteArrayList<String>
+    + getProposer() : String
+    + getRoundChangeProposer() : String
+    + getRoundCounter() : int
+    + getValidators() : CopyOnWriteArrayList<String>
+    + incrementRoundCounter()
+    + isValidBlock(inblock : Block) : boolean
+    + setChain(chain : CopyOnWriteArrayList<Block>)
+    + setNonValidators(nonValidators : CopyOnWriteArrayList<String>)
+    + setRoundCounter(newRoundCounter : int)
+    + setValidators(validators : CopyOnWriteArrayList<String>)
+  }
+  class TransactionPool {
+    + blockchain : Blockchain
+    + confirmedTransactionIds : CopyOnWriteArrayList<String>
+    + roundcounter : AtomicInteger
+    + transactionRoundStatus : Map<Integer, Boolean>
+    + transactionStorage : Map<Integer, CopyOnWriteArrayList<Transaction>>
+    + transactionThreshold : int
+    + TransactionPool()
+    + addTransaction(transaction : Transaction) : boolean
+    + addconfirmedTransactionId(id : String)
+    + addconfirmedTransactionIds(ids : List<String>)
+    + clearTransactionPool()
+    + clearTransactionPoolFromIncomingBlock(roundno : int, intransactions : CopyOnWriteArrayList<Transaction>)
+    + confirmedTransactionIdexists(id : String) : boolean
+    + confirmedTransactionIdsexists(ids : List<String>) : boolean
+    + getTransactionThreshold() : int
+    + getTransactions(roundno : int) : CopyOnWriteArrayList<Transaction>
+    + setTransactionThreshold(transactionThreshold : int)
+    + setTransactions(transactions : CopyOnWriteArrayList<Transaction>, roundno : int)
+    + transactionExists(intransaction : Transaction, roundno : int) : boolean
+    + verifyTransaction(transaction : Transaction) : boolean
+  }
+}
+Simulator_controller -->  "-nonValidator" NonValidator
+Blockchain -->  "-nonValidator" NonValidator
+Simulator_service -->  "-p2pServer" P2PServer
+Simulator_controller -->  "-blockPool" BlockPool
+P2PServer -->  "-queueResource" QueueResource
+Block -->  "-transactions" Transaction
+TransactionPool -->  "-blockchain" Blockchain
+BlockPool -->  "-blocks" Block
+Simulator_controller -->  "-transactionPool" TransactionPool
+IBFTMessageHandler -->  "-blockPool" BlockPool
+Simulator_controller -->  "-queueResource" QueueResource
+Simulator_controller -->  "-simulator_result" Simulator_result
+P2PServer -->  "-ibftMessagePool" IBFTMessagePool
+Simulator_service -->  "-wallet" Wallet
+IBFTMessageHandler -->  "-nonValidator" NonValidator
+Simulator_service -->  "-simulator_result" Simulator_result
+Simulator_controller -->  "-validator" Validator
+IBFTMessageHandler -->  "-pbftMessagePool" IBFTMessagePool
+Simulator_controller -->  "-synchronizer" Synchronizer
+P2PServer -->  "-nonValidator" NonValidator
+IBFTMessageHandler -->  "-wallet" Wallet
+Simulator_controller -->  "-ibftMessagePool" IBFTMessagePool
+P2PServer -->  "-validator" Validator
+Blockchain -->  "-validator" Validator
+Simulator_controller -->  "-blockchain" Blockchain
+Simulator_controller -->  "-p2pserver" P2PServer
+P2PServer -->  "-transactionPool" TransactionPool
+P2PServer -->  "-wallet" Wallet
+IBFTMessageHandler -->  "-blockchain" Blockchain
+P2PServer -->  "-blockPool" BlockPool
+Simulator_controller -->  "-wallet" Wallet
+IBFTMessageHandler -->  "-transactionPool" TransactionPool
+Blockchain -->  "-chain" Block
+Simulator_controller -->  "-simulator_service" Simulator_service
+P2PServer -->  "-blockchain" Blockchain
+IBFTMessageHandler -->  "-validator" Validator
+@enduml

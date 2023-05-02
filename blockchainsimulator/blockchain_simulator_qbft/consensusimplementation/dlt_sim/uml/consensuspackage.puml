@@ -1,0 +1,50 @@
+@startuml
+skinparam backgroundColor strategy
+skinparam defaultFontColor black
+skinparam defaultFontSize 30
+skinparam ArrowColor mediumturquoise
+skinparam ArrowThickness 5
+skinparam DefaultFontName Broadway
+package org.renaultleat.consensus {
+  class Message {
+    ~ blockHash : String
+    ~ contents : String
+    ~ messageSender : String
+    ~ messagesignature : String
+    ~ round : int
+    ~ type : String
+    + Message(type : String, blockHash : String, messagesignature : String, messageSender : String, contents : String, round : int)
+    + getBlockHash() : String
+    + getContents() : String
+    + getMessageSender() : String
+    + getMessagesignature() : String
+    + getRound() : int
+    + getType() : String
+    + setBlockHash(blockHash : String)
+    + setContents(contents : String)
+    + setMessageSender(messageSender : String)
+    + setMessagesignature(messagesignature : String)
+    + setRound(round : int)
+    + setType(type : String)
+  }
+  class BFTMessageHandler {
+    + blockPool : BlockPool
+    + blockchain : Blockchain
+    + currentuser : String
+    - minapprovals : int
+    + nodeCommunicator : NodeCommunicator
+    + nonValidator : NonValidator
+    + bftMessagePool : BFTMessagePool
+    + transactionPool : TransactionPool
+    + validator : Validator
+    + wallet : Wallet
+    + BFTMessageHandler(blockChain , transactionPool, wallet , bftMessagePool, validator, nodeCommunicator , blockpool ,currentuser)
+    + broadCastCommit(data : Message, message : String)
+    + broadCastPrePrepare(block : Block, message : String)
+    + broadCastPrepare(data : Message, message : String)
+    + broadCastRoundChange(data : Message, message : String, user : String)
+    + handleMessage(jsonObject : JSONObject)
+  }
+  
+}
+@enduml
